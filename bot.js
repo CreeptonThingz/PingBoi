@@ -10,6 +10,7 @@ let isPinging = false;
 
 client.commands = new Discord.Collection();
 
+// filescan
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
@@ -37,6 +38,7 @@ client.on('message', message => {
     if (!isDisabled) {
         if (command === "say") { client.commands.get("say").execute(message, args); }
         if (command === "idiot") { client.commands.get("idiot").execute(message, args, getRandomInt); }
+        if (command === "ubw") { client.commands.get("ubw").execute(message); }
     }
 });
 
