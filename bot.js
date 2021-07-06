@@ -34,6 +34,7 @@ client.on('message', message => {
     if (command === "ping") { client.commands.get("ping").execute(message, client); }
     if (command === "expurosion") { client.commands.get("expurosion").execute(message, isDisabled, setDisabled, ownerID); }
     if (command === "disabled") { client.commands.get("disabled").execute(message, isDisabled); }
+    if (command === "plotarmor") { client.commands.get("plotarmor").execute(message, isDisabled, setDisabled, ownerID);}
 });
 
 client.login("Njg5NDk2NzE0MzQ4MDY4ODgy.Xv1WWg.11hn3p0bVSYWvz6WEsxL9FebSac");
