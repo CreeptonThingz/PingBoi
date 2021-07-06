@@ -1,5 +1,3 @@
-const globalVars = require("../globalVars");
-
 module.exports = {
     name: "expurosion",
     description: "disables bot",
