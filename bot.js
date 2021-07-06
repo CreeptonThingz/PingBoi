@@ -36,10 +36,21 @@ client.on('message', message => {
 
     if (!isDisabled) {
         if (command === "say") { client.commands.get("say").execute(message, args); }
+        if (command === "idiot") { client.commands.get("idiot").execute(message, args, getRandomInt); }
     }
 });
 
 // Create functions to pass down
 function setDisabled(booleanVal) { isDisabled = booleanVal; }
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+}
+
+function getRandomInt(max) {
+    max = Math.floor(max);
+    return Math.floor(Math.random() * max);
+}
 client.login("Njg5NDk2NzE0MzQ4MDY4ODgy.Xv1WWg.11hn3p0bVSYWvz6WEsxL9FebSac");
