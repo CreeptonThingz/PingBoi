@@ -31,7 +31,7 @@ client.on('message', message => {
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if (command === "ping") { client.commands.get("ping").execute(message, args, client); }
+    if (command === "ping") { client.commands.get("ping").execute(message, client); }
     if (command === "expurosion") { client.commands.get("expurosion").execute(message, isDisabled, setDisabled, ownerID); }
     if (command === "disabled") { client.commands.get("disabled").execute(message, isDisabled); }
 });

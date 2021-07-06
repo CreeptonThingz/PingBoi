@@ -1,7 +1,7 @@
 module.exports = {
     name: "ping",
     description: "this is a ping command",
-    execute(message, args, client) {
+    execute(message, client) {
         message.channel.send(`${Math.round(client.ws.ping)} ms`);
     }
 }
