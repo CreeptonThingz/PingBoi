@@ -8,9 +8,6 @@ const ownerID = 162672579025436673;
 let isDisabled = false;
 let isPinging = false;
 
-// Create functions to pass down
-function setDisabled(booleanVal) { isDisabled = booleanVal; }
-
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands/').filter(file => file.endsWith('.js'));
@@ -33,8 +30,12 @@ client.on('message', message => {
 
     if (command === "ping") { client.commands.get("ping").execute(message, client); }
     if (command === "expurosion") { client.commands.get("expurosion").execute(message, isDisabled, setDisabled, ownerID); }
-    if (command === "disabled") { client.commands.get("disabled").execute(message, isDisabled); }
     if (command === "plotarmor") { client.commands.get("plotarmor").execute(message, isDisabled, setDisabled, ownerID);}
+    if (command === "disabled") { client.commands.get("disabled").execute(message, isDisabled); }
+    if (command === "pinging") { client.commands.get("pinging").execute(message, isPinging); }
 });
+
+// Create functions to pass down
+function setDisabled(booleanVal) { isDisabled = booleanVal; }
 
 client.login("Njg5NDk2NzE0MzQ4MDY4ODgy.Xv1WWg.11hn3p0bVSYWvz6WEsxL9FebSac");
