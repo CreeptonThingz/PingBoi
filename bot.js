@@ -3,6 +3,13 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 const prefix = '.';
+const ownerID = 162672579025436673;
+
+let isDisabled = false;
+let isPinging = false;
+
+// Create functions to pass down
+function setDisabled(booleanVal) { isDisabled = booleanVal; }
 
 client.commands = new Discord.Collection();
 
@@ -17,17 +24,16 @@ client.once('ready', () => {
     console.log("PingBoi is online");
 });
 
+
 client.on('message', message => {
-    if (!message.content.startsWith(prefix) || message.author.bot) { return; }
+    if (!message.content.startsWith(prefix) || message.author.bot || message.guild == null) { return; }
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-    if (command === "ping") {
-        client.commands.get("ping").execute(message, args);
-        console.log(args);
-        console.log(command);
-    }
+    if (command === "ping") { client.commands.get("ping").execute(message, args, client); }
+    if (command === "expurosion") { client.commands.get("expurosion").execute(message, isDisabled, setDisabled, ownerID); }
+    if (command === "disabled") { client.commands.get("disabled").execute(message, isDisabled); }
 });
 
 client.login("Njg5NDk2NzE0MzQ4MDY4ODgy.Xv1WWg.11hn3p0bVSYWvz6WEsxL9FebSac");
