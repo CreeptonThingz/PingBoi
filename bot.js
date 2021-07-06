@@ -33,6 +33,10 @@ client.on('message', message => {
     if (command === "plotarmor") { client.commands.get("plotarmor").execute(message, isDisabled, setDisabled, ownerID);}
     if (command === "disabled") { client.commands.get("disabled").execute(message, isDisabled); }
     if (command === "pinging") { client.commands.get("pinging").execute(message, isPinging); }
+
+    if (!isDisabled) {
+        if (command === "say") { client.commands.get("say").execute(message, args); }
+    }
 });
 
 // Create functions to pass down
