@@ -7,6 +7,7 @@ const ownerID = 162672579025436673;
 
 let isDisabled = false;
 let isPinging = false;
+let spamCount = 0;
 
 client.commands = new Discord.Collection();
 
@@ -36,6 +37,7 @@ client.on('message', message => {
     if (command === "pinging") { client.commands.get("pinging").execute(message, isPinging); }
 
     if (!isDisabled) {
+        if (command === "spam") { client.commands.get("spam").execute(message, args, isPinging, setPinging, setSpamCount); }
         if (command === "say") { client.commands.get("say").execute(message, args); }
         if (command === "idiot") { client.commands.get("idiot").execute(message, args, getRandomInt); }
         if (command === "ubw") { client.commands.get("ubw").execute(message); }
@@ -44,6 +46,8 @@ client.on('message', message => {
 
 // Create functions to pass down
 function setDisabled(booleanVal) { isDisabled = booleanVal; }
+function setPinging(booleanVal) { isPinging = booleanVal; }
+function setSpamCount(num) { spamCount = num; }
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
