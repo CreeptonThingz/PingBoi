@@ -54,6 +54,7 @@ client.on('message', message => {
         if (command === "idiot") { client.commands.get("idiot").execute(message, args, getRandomInt); }
         if (command === "ubw") { client.commands.get("ubw").execute(message); }
         if (command === "megumin") { client.commands.get("megumin").execute(message, getRandomInt); }
+        if (command === "rngball") { client.commands.get("rngball").execute(message, getRandomInt, randomColor, Discord); }
     }
 });
 
@@ -75,4 +76,9 @@ function getRandomInt(max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * max);
 }
+
+function randomColor() {
+    return Math.floor(Math.random()*16777215).toString(16);
+}
+
 client.login("Njg5NDk2NzE0MzQ4MDY4ODgy.Xv1WWg.11hn3p0bVSYWvz6WEsxL9FebSac");
