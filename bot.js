@@ -7,7 +7,11 @@ const ownerID = 162672579025436673;
 
 let isDisabled = false;
 let isPinging = false;
+let spamPing;
 let spamCount = 0;
+let spamVictim = "";
+let spamStarter = "";
+let mentionMessage = "";
 
 client.commands = new Discord.Collection();
 
@@ -25,6 +29,13 @@ client.once('ready', () => {
 
 
 client.on('message', message => {
+    if (isPinging) {
+        spamPing = setTimeout(function() {
+            spamVictim.send(mentionMessage);
+            spamCount++;
+        }, 1000); // spam every one second
+    } 
+
     if (!message.content.startsWith(prefix) || message.author.bot || message.guild == null) { return; }
 
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -37,10 +48,12 @@ client.on('message', message => {
     if (command === "pinging") { client.commands.get("pinging").execute(message, isPinging); }
 
     if (!isDisabled) {
-        if (command === "spam") { client.commands.get("spam").execute(message, args, isPinging, setPinging, setSpamCount); }
+        if (command === "spam") { client.commands.get("spam").execute(message, args, isPinging, setPinging, setSpamCount, setSpamVictim, setSpamStarter, setMentionMessage); }
+        if (command === "stop") { client.commands.get("stop").execute(message, isPinging, isDisabled, setDisabled, spamVictim, spamStarter, ownerID, spamCount, setPinging, spamPing); }
         if (command === "say") { client.commands.get("say").execute(message, args); }
         if (command === "idiot") { client.commands.get("idiot").execute(message, args, getRandomInt); }
         if (command === "ubw") { client.commands.get("ubw").execute(message); }
+        if (command === "megumin") { client.commands.get("megumin").execute(message); }
     }
 });
 
@@ -48,6 +61,9 @@ client.on('message', message => {
 function setDisabled(booleanVal) { isDisabled = booleanVal; }
 function setPinging(booleanVal) { isPinging = booleanVal; }
 function setSpamCount(num) { spamCount = num; }
+function setSpamVictim(userID) { spamVictim = userID; }
+function setSpamStarter(userID) { spamStarter = userID; }
+function setMentionMessage(text) { mentionMessage = text; }
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);

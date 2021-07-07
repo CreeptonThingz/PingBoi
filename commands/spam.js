@@ -1,7 +1,7 @@
 module.exports = {
     name: "spam",
     description: "bullies someone",
-    execute(message, args, isPinging, setPinging, setSpamCount) {
+    execute(message, args, isPinging, setPinging, setSpamCount, setSpamVictim, setSpamStarter, setMentionMessage) {
         if (isPinging) { 
             message.channel.send("The transmutation circle is currently being used.");
         } else {
@@ -18,6 +18,9 @@ module.exports = {
 
             spamVictim.send(mentionMessage)
             .then(() => {
+                setSpamVictim(spamVictim);
+                setSpamStarter(spamStarter);
+                setMentionMessage(mentionMessage);
                 message.channel.send("Now pinging " + spamVictim.displayName);
                 setSpamCount(1);
                 setPinging(true);
@@ -26,7 +29,8 @@ module.exports = {
                 console.error(err);
                 
                 message.channel.send("I am unable to bully them.");
-            })
+                setPinging(false);
+            });
         }
     }
 }
