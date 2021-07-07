@@ -53,7 +53,7 @@ client.on('message', message => {
         if (command === "say") { client.commands.get("say").execute(message, args); }
         if (command === "idiot") { client.commands.get("idiot").execute(message, args, getRandomInt); }
         if (command === "ubw") { client.commands.get("ubw").execute(message); }
-        if (command === "megumin") { client.commands.get("megumin").execute(message); }
+        if (command === "megumin") { client.commands.get("megumin").execute(message, getRandomInt); }
     }
 });
 
