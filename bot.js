@@ -27,6 +27,7 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     console.log("PingBoi is online");
+    client.user.setActivity('questionable content', { type: 'WATCHING' });
 });
 
 
