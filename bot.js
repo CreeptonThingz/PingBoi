@@ -6,6 +6,8 @@ const prefix = '.';
 const ownerID = 162672579025436673;
 
 let isDisabled = false;
+
+// spam/stop command stuff
 let isPinging = false;
 let spamPing;
 let spamCount = 0;
@@ -33,7 +35,7 @@ client.on('message', message => {
         spamPing = setTimeout(function() {
             spamVictim.send(mentionMessage);
             spamCount++;
-        }, 1000); // spam every one second
+        }, 1000);
     } 
 
     if (!message.content.startsWith(prefix) || message.author.bot || message.guild == null) { return; }
@@ -55,6 +57,7 @@ client.on('message', message => {
         if (command === "ubw") { client.commands.get("ubw").execute(message); }
         if (command === "megumin") { client.commands.get("megumin").execute(message, getRandomInt); }
         if (command === "rngball") { client.commands.get("rngball").execute(message, getRandomInt, randomColor, Discord); }
+        if (command === "random") { client.commands.get("random").execute(message, args, getRandomInt, getRandomIntMin); }
     }
 });
 
@@ -66,7 +69,7 @@ function setSpamVictim(userID) { spamVictim = userID; }
 function setSpamStarter(userID) { spamStarter = userID; }
 function setMentionMessage(text) { mentionMessage = text; }
 
-function getRandomInt(min, max) {
+function getRandomIntMin(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
