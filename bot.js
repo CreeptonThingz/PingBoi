@@ -53,6 +53,7 @@ client.on('message', message => {
     if (!isDisabled) {
         if (command === "spam") { client.commands.get("spam").execute(message, args, isPinging, setPinging, setSpamCount, setSpamVictim, setSpamStarter, setMentionMessage); }
         if (command === "stop") { client.commands.get("stop").execute(message, isPinging, isDisabled, setDisabled, spamVictim, spamStarter, ownerID, spamCount, setPinging, spamPing); }
+        if (command === "image") { client.commands.get("image").execute(message, args); }
         if (command === "say") { client.commands.get("say").execute(message, args); }
         if (command === "idiot") { client.commands.get("idiot").execute(message, args, getRandomInt); }
         if (command === "ubw") { client.commands.get("ubw").execute(message); }
