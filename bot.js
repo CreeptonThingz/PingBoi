@@ -3,7 +3,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 const prefix = '.';
-const ownerID = 162672579025436673;
+const ownerID = "162672579025436673";
 
 let isDisabled = false;
 
@@ -11,8 +11,8 @@ let isDisabled = false;
 let isPinging = false;
 let spamPing;
 let spamCount = 0;
-let spamVictim = "";
-let spamStarter = "";
+let spamVictim;
+let spamStarter;
 let mentionMessage = "";
 
 client.commands = new Discord.Collection();
@@ -67,8 +67,8 @@ client.on('message', message => {
 function setDisabled(booleanVal) { isDisabled = booleanVal; }
 function setPinging(booleanVal) { isPinging = booleanVal; }
 function setSpamCount(num) { spamCount = num; }
-function setSpamVictim(userID) { spamVictim = userID; }
-function setSpamStarter(userID) { spamStarter = userID; }
+function setSpamVictim(user) { spamVictim = user; }
+function setSpamStarter(user) { spamStarter = user; }
 function setMentionMessage(text) { mentionMessage = text; }
 
 function getRandomIntMin(min, max) {

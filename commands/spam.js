@@ -1,12 +1,12 @@
 module.exports = {
     name: "spam",
     description: "bullies someone",
-    execute(message, args, isPinging, setPinging, setSpamCount, setSpamVictim, setSpamStarter, setMentionMessage) {
+    execute(message, args, isPinging, setPinging, setSpamCount, setSpamVictimID, setSpamStarterID, setMentionMessage) {        
         if (isPinging) { 
             message.channel.send("The transmutation circle is currently being used.");
         } else {
             let spamVictim = message.mentions.members.first();
-            let spamStarter = message.author.id;
+            let spamStarter = message.author;
             let mentionMessage = args.join(" ");
 
             if (spamVictim == null) {
@@ -18,8 +18,8 @@ module.exports = {
 
             spamVictim.send(mentionMessage)
             .then(() => {
-                setSpamVictim(spamVictim);
-                setSpamStarter(spamStarter);
+                setSpamVictimID(spamVictim);
+                setSpamStarterID(spamStarter);
                 setMentionMessage(mentionMessage);
                 message.channel.send("Now pinging " + spamVictim.displayName);
                 setSpamCount(1);
