@@ -45,9 +45,12 @@ client.on('message', message => {
     const command = args.shift().toLowerCase();
 
     if (command === "help") { client.commands.get("help").execute(message, Discord); }
-    if (command === "ping") { client.commands.get("ping").execute(message, client); }
+    
     if (command === "expurosion") { client.commands.get("expurosion").execute(message, isDisabled, setDisabled, ownerID); }
     if (command === "plotarmor") { client.commands.get("plotarmor").execute(message, isDisabled, setDisabled, ownerID);}
+    if (command === "monthlypfp") { client.commands.get("monthlypfp").execute(message, args, ownerID, getRandomInt); }
+
+    if (command === "ping") { client.commands.get("ping").execute(message, client); }
     if (command === "disabled") { client.commands.get("disabled").execute(message, isDisabled); }
     if (command === "pinging") { client.commands.get("pinging").execute(message, isPinging); }
 
