@@ -15,11 +15,13 @@ module.exports = {
             { name: "Developer Commands:", value: "\u200B" }, 
             { name: ".expurosion", value: "Cast Megumin's personal explosion spell on the bot, disabling it" },
             { name: ".plotarmor", value: "Summon Rho Aias to block literally anything, reviving the bot" },
+            { name: ".monthlypfp", value: "It is quite literally in the most literal since stil 100% RNG"},
             { name: "\u200B", value: "\u200B" }, 
             
             { name: "Status Commands:", value: "\u200B" },
             { name: ".disabled", value: "Did Megumin frick up the bot? Find out here" },
             { name: ".pinging", value: "Is someone being abused? Find out here" },
+            { name: ".ping", value: "Check latency" },
             { name: "\u200B", value: "\u200B" }, 
 
             { name: "Function Commands:", value: "\u200B" },
@@ -32,7 +34,7 @@ module.exports = {
             { name: ".megumin", value: "Receive the chant that the almighty Megumin says to defeat her foes" },
             { name: ".rngBall <message>", value: "It's 100% RNG I swear" },
             { name: ".random <number> OR .random <mininmum> <maximum>", value: "It's still 100% RNG I swear" }
-            // used spaces - 21 - 4 remaining
+            // 2 fields remaining
         )
         .setTimestamp()
         .setFooter("Copyright Probably PingBoi");
