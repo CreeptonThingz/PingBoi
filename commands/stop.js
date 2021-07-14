@@ -1,12 +1,7 @@
 module.exports = {
     name: "stop",
     description: "stop bullying",
-    execute(message, isPinging, isDisabled, setDisabled, spamVictim, spamStarter, ownerID, spamCount, setPinging, spamPing) {
-        console.log(message.author.id);
-        console.log(ownerID);
-        console.log(spamVictim.id);
-        console.log(spamStarter.id);
-
+    execute(message, isPinging, isDisabled, setDisabled, spamVictim, spamStarter, ownerID, spamCount, setPinging, spamPing, client) {
         let messageAuthor = message.author.id;
 
         if (!isPinging) {
@@ -17,6 +12,7 @@ module.exports = {
             message.channel.send(spamVictim.displayName + ` was pinged ${spamCount+1} times`);
             clearTimeout(spamPing);
             setPinging(false);
+            client.user.setActivity("questionable content", { type: "WATCHING" });
         } else {
             message.channel.send("This does not concern you, go along now");
             return;
