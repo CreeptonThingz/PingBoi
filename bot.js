@@ -27,17 +27,23 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     console.log("PingBoi is online");
-    client.user.setActivity('questionable content', { type: 'WATCHING' });
+    client.user.setActivity("questionable content", { type: "WATCHING" });
 });
 
 
 client.on('message', message => {
     if (isPinging) {
         spamPing = setTimeout(function() {
-            spamVictim.send(mentionMessage);
+            spamVictim.send(mentionMessage)
+            .catch(err => {
+                console.error(err);
+
+                message.channel.send(spamVictim.displayName + " blocked me lol");
+                setPinging(false);
+            });
             spamCount++;
         }, 1000);
-    } 
+    }
 
     if (!message.content.startsWith(prefix) || message.author.bot || message.guild == null) { return; }
 
@@ -55,9 +61,9 @@ client.on('message', message => {
     if (command === "pinging") { client.commands.get("pinging").execute(message, isPinging); }
 
     if (!isDisabled) {
-        if (command === "spam") { client.commands.get("spam").execute(message, args, isPinging, setPinging, setSpamCount, setSpamVictim, setSpamStarter, setMentionMessage); }
-        if (command === "stop") { client.commands.get("stop").execute(message, isPinging, isDisabled, setDisabled, spamVictim, spamStarter, ownerID, spamCount, setPinging, spamPing); }
-        if (command === "image") { client.commands.get("image").execute(message, args); }
+        if (command === "spam") { client.commands.get("spam").execute(message, args, isPinging, setPinging, setSpamCount, setSpamVictim, setSpamStarter, setMentionMessage, client); }
+        if (command === "stop") { client.commands.get("stop").execute(message, isPinging, isDisabled, setDisabled, spamVictim, spamStarter, ownerID, spamCount, setPinging, spamPing, client); }
+        if (command === "image") { client.commands.get("image").execute(message, args, randomColor, getRandomInt, Discord); }
         if (command === "say") { client.commands.get("say").execute(message, args); }
         if (command === "idiot") { client.commands.get("idiot").execute(message, args, getRandomInt); }
         if (command === "ubw") { client.commands.get("ubw").execute(message); }
