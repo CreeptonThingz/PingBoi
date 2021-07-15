@@ -8,6 +8,6 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "images-scraper": "^6.3.0"
+    "request": "^2.88.2"
   }
 }
