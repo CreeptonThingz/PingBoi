@@ -1,4 +1,4 @@
-const https = require('https');
+const fetch = require('node-fetch');
 const CLIENT_ID = "4f739b764aaf428";
 
 module.exports = {
@@ -6,71 +6,100 @@ module.exports = {
     description: "search for image",
     execute(message, args, getRandomInt, Discord) {
         const imageQuery = args.join("+");
-        let path = "/3/gallery/search/1?q_all=" + imageQuery;
-        let imgurOptions = {
-            hostname: "api.imgur.com",
-            path: path,
-            headers: {
-                "Authorization": "Client-ID " + CLIENT_ID
-            },
-            method: "GET"
-        };
 
-        https.get(imgurOptions, (res) => {
-            let data = "";
+        message.channel.send("Searching for " + imageQuery.split("+").join(" ").toLowerCase() + "...")
+            .then(async msg => { // search for tag first and switch to plan b if undefined
+                let imageEmbed, imageTitle, imageLink, albumLink;
 
-            res.on("data", (d) => {
-                data += d;
+                let url = "https://api.imgur.com/3/gallery/t/" + imageQuery + "/viral/all/"   
+                let imgurOptions = {
+                    headers: {
+                        "Authorization": "Client-ID " + CLIENT_ID
+                    },
+                    method: "GET"
+                }
+                // if (args.length == 1) { // if one argument
+
+                // } else { // if more than one argument
+                //     url = "https://api.imgur.com/3/gallery/search/viral/all/?q=" + imageQuery;
+
+                //     imgurOptions = {
+                //         headers: {
+                //             "Authorization": "Client-ID " + CLIENT_ID
+                //         },
+                //         method: "GET"
+                //     }
+                // }
+        
+                let imgurData = JSON.parse(await fetch(url, imgurOptions)
+                    .then(res => res.text())
+                    .catch(err => console.error(err)));
+
+                if (imgurData.data.total_items == 0) { // If tag is empty
+                    url = "https://api.imgur.com/3/gallery/search/viral/all/?q=" + imageQuery;
+                    imgurData = JSON.parse(await fetch(url, imgurOptions)
+                        .then(res => res.text())
+                        .catch(err => console.error(err)));
+
+                    if (imgurData.data.length == 0) {
+                        msg.delete();
+                        message.channel.send("Could not find image");
+                        return;
+                    }
+
+                    let randomInt = getRandomInt(imgurData.data.length);
+                    imageTitle = imgurData.data[randomInt].title;
+                    albumLink = imgurData.data[randomInt].link;
+
+                    if (imgurData.data[randomInt].is_album) {
+
+                        let albumData = JSON.parse(await fetch(url, imageOptions)
+                            .then(res => res.text())
+                            .catch(err => console.error(err)));
+
+                        iamgeLink = albumData.data[getRandomInt(albumData.data.length)].link;
+                    } else {
+                        imageLink = albumLink;
+                    }
+                } else {
+                    let randomInt = getRandomInt(imgurData.data.items.length-1);
+                    imageTitle = imgurData.data.items[randomInt].title;
+                    albumLink = imgurData.data.items[randomInt].link;
+                    
+                    if (imgurData.data.items[randomInt].is_album) { // If selection is an album of images
+                        url = "https://api.imgur.com/3/album/" + imgurData.data.items[randomInt].id + "/images";
+
+                        let albumData = JSON.parse(await fetch(url, imgurOptions)
+                            .then(res => res.text())
+                            .catch(err => console.error(err)));
+
+                        imageLink = albumData.data[getRandomInt(albumData.data.length)].link;
+                    } else {
+                        imageLink = albumLink;
+                    }
+                }
+
+                // Errors: if .mp4 file, if no result
+
+                if (imageLink.endsWith(".mp4") || imageLink.endsWith(".gif")) {
+                    msg.delete();
+                    message.channel.send(imageTitle + "\n" + albumLink);
+                    return;
+                }
+
+                imageEmbed = new Discord.MessageEmbed()
+                    .setColor("#89C623")
+                    .setTitle(imageTitle)
+                    .setURL(albumLink)
+                    .setImage(imageLink)
+                    .setTimestamp();
+
+                msg.delete();
+                message.channel.send(imageEmbed);
+            })
+            .catch(err =>  {
+                console.error(err);
+                return;
             });
-
-            res.on("end", () => {
-                message.channel.send("Searching for " + imageQuery.split("+").join(" ").toLowerCase() + "...")
-                    .then(async msg => {
-                        imgurData = JSON.parse(data);
-                        console.log("data:", imgurData.data[0]);
-
-                        let randomInt = getRandomInt(imgurData.data.length-1);
-                        let imageEmbed, imageTitle, imageLink;
-
-                        if (imgurData.data[randomInt].ad_config.safeFlags.includes("album")
-                            .catch(err => {
-                                console.error(err);
-                                msg.delete();
-                                message.channel.send("Could not find image (probably because imgur API sucks at using itself)")
-                            })) {
-                            imageTitle = imgurData.data[randomInt].title;       
-                            let galleryLink = imgurData.data[randomInt].link;    
-                            imageLink = imgurData.data[randomInt].images[getRandomInt(imgurData.data[randomInt].images.length-1)].link;   
-
-                            imageEmbed = new Discord.MessageEmbed()
-                                .setColor("#89C623")
-                                .setTitle(imageTitle)
-                                .setURL(galleryLink)
-                                .setImage(imageLink)
-                                .setTimestamp();
-                        } else {
-                            imageTitle = imgurData.data[randomInt].title;        
-                            imageLink = imgurData.data[randomInt].link;  
-
-                            imageEmbed = new Discord.MessageEmbed()
-                                .setColor("#89C623")
-                                .setTitle(imageTitle)
-                                .setURL(imageLink)
-                                .setImage(imageLink)
-                                .setTimestamp();
-                        }
-
-                        msg.delete();
-                        message.channel.send(imageEmbed);
-                    })
-                    .catch(err => {
-                        console.error(err);
-                        msg.delete();
-                        message.channel.send("Could not find image (probably because imgur API sucks at using itself)")
-                    });
-            });  
-        }).on("error", (err) => {
-            console.error(err);
-        });
     }
 }
