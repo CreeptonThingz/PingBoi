@@ -18,18 +18,6 @@ module.exports = {
                     },
                     method: "GET"
                 }
-                // if (args.length == 1) { // if one argument
-
-                // } else { // if more than one argument
-                //     url = "https://api.imgur.com/3/gallery/search/viral/all/?q=" + imageQuery;
-
-                //     imgurOptions = {
-                //         headers: {
-                //             "Authorization": "Client-ID " + CLIENT_ID
-                //         },
-                //         method: "GET"
-                //     }
-                // }
         
                 let imgurData = JSON.parse(await fetch(url, imgurOptions)
                     .then(res => res.text())
@@ -52,12 +40,13 @@ module.exports = {
                     albumLink = imgurData.data[randomInt].link;
 
                     if (imgurData.data[randomInt].is_album) {
+                        url = "https://api.imgur.com/3/album/" + imgurData.data[randomInt].id + "/images";
 
-                        let albumData = JSON.parse(await fetch(url, imageOptions)
+                        let albumData = JSON.parse(await fetch(url, imgurOptions)
                             .then(res => res.text())
                             .catch(err => console.error(err)));
 
-                        iamgeLink = albumData.data[getRandomInt(albumData.data.length)].link;
+                        imageLink = albumData.data[getRandomInt(albumData.data.length)].link;
                     } else {
                         imageLink = albumLink;
                     }
