@@ -23,7 +23,7 @@ module.exports = {
                     .then(res => res.text())
                     .catch(err => console.error(err)));
 
-                if (imgurData.data.total_items == 0) { // If tag is empty
+                if (imgurData.data.total_items <= 0) { // If tag is empty
                     url = "https://api.imgur.com/3/gallery/search/viral/all/?q=" + imageQuery;
                     imgurData = JSON.parse(await fetch(url, imgurOptions)
                         .then(res => res.text())
