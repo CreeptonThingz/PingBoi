@@ -1,7 +1,7 @@
 module.exports = {
     name: "spam",
     description: "bullies someone",
-    execute(message, args, isPinging, setPinging, setSpamCount, setSpamVictim, setSpamStarter, setMentionMessage, client) {        
+    execute(message, args, isPinging, setPinging, setSpamVictim, setSpamStarter, setMentionMessage, setSpamPing, client) {      
         if (isPinging) { 
             message.channel.send("The transmutation circle is currently being used.");
         } else {
@@ -18,18 +18,21 @@ module.exports = {
 
             spamVictim.send(mentionMessage)
             .then(() => {
+                message.channel.send("Now pinging " + spamVictim.displayName);
+                client.user.setActivity("bully simulator", { type: "PLAYING" });
+
+                setMentionMessage(mentionMessage);
                 setSpamVictim(spamVictim);
                 setSpamStarter(spamStarter);
-                setMentionMessage(mentionMessage);
-                message.channel.send("Now pinging " + spamVictim.displayName);
-                setSpamCount(1);
                 setPinging(true);
-                client.user.setActivity("bully simulator", { type: "PLAYING" });
+                setSpamPing();
+                
             })
             .catch(err => {
                 console.error(err);
                 
                 message.channel.send("I am unable to bully them.");
+                client.user.setActivity("questionable content", { type: "WATCHING" });
                 setPinging(false);
             });
         }

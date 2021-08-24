@@ -13,7 +13,7 @@ let spamPing;
 let spamCount = 0;
 let spamVictim;
 let spamStarter;
-let mentionMessage = "";
+let mentionMessage;
 
 client.commands = new Discord.Collection();
 
@@ -31,20 +31,7 @@ client.once('ready', () => {
 });
 
 
-client.on('message', message => {
-    if (isPinging) {
-        spamPing = setTimeout(function() {
-            spamVictim.send(mentionMessage)
-            .catch(err => {
-                console.error(err);
-
-                message.channel.send(spamVictim.displayName + " blocked me lol");
-                setPinging(false);
-            });
-            spamCount++;
-        }, 1000);
-    }
-
+client.on('message', async message => {
     if (!message.content.startsWith(prefix) || message.author.bot || message.guild == null) { return; }
 
     const args = message.content.slice(prefix.length).split(/ +/);
@@ -61,8 +48,8 @@ client.on('message', message => {
     if (command === "pinging") { client.commands.get("pinging").execute(message, isPinging); }
 
     if (!isDisabled) {
-        if (command === "spam") { client.commands.get("spam").execute(message, args, isPinging, setPinging, setSpamCount, setSpamVictim, setSpamStarter, setMentionMessage, client); }
-        if (command === "stop") { client.commands.get("stop").execute(message, isPinging, isDisabled, setDisabled, spamVictim, spamStarter, ownerID, spamCount, setPinging, spamPing, client); }
+        if (command === "spam") { client.commands.get("spam").execute(message, args, isPinging, setPinging, setSpamVictim, setSpamStarter, setMentionMessage, setSpamPing, client); }
+        if (command === "stop") { client.commands.get("stop").execute(message, isPinging, setPinging, spamVictim, spamStarter, ownerID, spamCount, spamPing, client); }
         if (command === "image") { client.commands.get("image").execute(message, args, getRandomInt, Discord); }
         if (command === "say") { client.commands.get("say").execute(message, args); }
         if (command === "idiot") { client.commands.get("idiot").execute(message, args, getRandomInt); }
@@ -79,7 +66,23 @@ function setPinging(booleanVal) { isPinging = booleanVal; }
 function setSpamCount(num) { spamCount = num; }
 function setSpamVictim(user) { spamVictim = user; }
 function setSpamStarter(user) { spamStarter = user; }
-function setMentionMessage(text) { mentionMessage = text; }
+function setMentionMessage(message) { mentionMessage = message; }
+function setSpamPing() { 
+    spamCount = 1;
+
+    spamPing = setInterval(function() {
+        spamVictim.send(mentionMessage)
+            .catch(err => {
+                console.error(err);
+
+                message.channel.send(spamVictim.displayName + " blocked me lol");
+                clearInterval(spamPing);
+                setPinging(false);
+            });
+
+        spamCount++;
+    }, 2000);
+}
 
 function getRandomIntMin(min, max) {
     min = Math.ceil(min);
