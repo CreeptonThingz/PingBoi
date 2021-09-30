@@ -8,7 +8,7 @@ module.exports = {
             message.channel.send("What ever do you mean \"stop\"?");
             return;
         } else if (messageAuthor == spamVictim.id || messageAuthor == spamStarter.id || messageAuthor == ownerID) {
-            seconds = (spamCount*2)%30
+            seconds = (spamCount%30)*2;
             hours = Math.floor(spamCount/1800);
             minutes = Math.floor(spamCount/30);
 
