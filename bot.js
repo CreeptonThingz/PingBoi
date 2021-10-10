@@ -84,12 +84,14 @@ function setSpamPing() {
     }, 2000);
 }
 
+// min inclusive, max exclusive
 function getRandomIntMin(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
 }
 
+// min 0 is inclusive, max exclusive
 function getRandomInt(max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * max);

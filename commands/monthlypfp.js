@@ -10,11 +10,12 @@ module.exports = {
         let user1 = args.shift();
         let user2 = args.shift();
 
-        randChar1 = args[getRandomInt(args.length-1)];
-        args.splice(args.indexOf(randChar1));
+        randChar1 = args[getRandomInt(args.length)];
+        args.splice(args.indexOf(randChar1), 1);
 
-        randChar2 = args[getRandomInt(args.length-1)];
-        args.splice(args.indexOf(randChar2));
+
+        randChar2 = args[getRandomInt(args.length)];
+        args.splice(args.indexOf(randChar2), 1);
 
         message.channel.send(user1 + " gets " + randChar1);
         message.channel.send(user2 + " gets " + randChar2);
