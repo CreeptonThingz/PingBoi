@@ -1,6 +1,7 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const keepAlive = require('./server');
 
 const prefix = '.';
 const ownerID = "162672579025436673";
@@ -101,4 +102,5 @@ function randomColor() {
     return Math.floor(Math.random()*16777215).toString(16);
 }
 
-client.login("Njg5NDk2NzE0MzQ4MDY4ODgy.Xv1WWg.11hn3p0bVSYWvz6WEsxL9FebSac");
+keepAlive();
+client.login(process.env['logintoken']);
