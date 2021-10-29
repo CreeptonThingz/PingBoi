@@ -1,7 +1,9 @@
 module.exports = {
     name: "megumin",
     description: "megumin chants",
-    execute(message, getRandomInt) {
+    execute(message) {
+        const getRandomInt = require('./../bot');
+
         switch (getRandomInt(3)) {
             case 0:
                 message.channel.send(

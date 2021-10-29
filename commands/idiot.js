@@ -1,7 +1,9 @@
 module.exports = {
     name: "idiot",
     description: "bully or get bullied",
-    execute(message, args, getRandomInt) {
+    execute(message, args) {
+        const getRandomInt = require('./../bot');
+
         if (args.length === 0) {
             message.channel.send("Who's the idiot, you?");
             return;

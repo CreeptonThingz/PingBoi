@@ -1,7 +1,9 @@
 module.exports = {
     name: "random",
     description: "gives a random int",
-    execute(message, args, getRandomInt, getRandomIntMin) {
+    execute(message, args) {
+        const { getRandomInt, getRandomIntMin } = require('./../bot');
+
         // Errors
         if (args.length > 2) {
             message.channel.send("Too many inputs");

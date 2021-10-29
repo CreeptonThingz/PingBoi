@@ -1,7 +1,9 @@
 module.exports = {
     name: "monthlypfp",
     description: "randomizes monthly pfp",
-    execute(message, args, ownerID, getRandomInt) {
+    execute(message, args, ownerID) {
+        const getRandomInt = require('./../bot');
+
         if (message.author.id != ownerID) {
             message.channel.send("One must have knowledge of all past selves before gaining the authority of this command");
             return;

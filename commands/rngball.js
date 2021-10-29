@@ -1,7 +1,9 @@
 module.exports = {
     name: "rngball",
     description: "8ball but better",
-    execute(message, getRandomInt, randomColor, Discord) {
+    execute(message, Discord) {
+        const { getRandomInt, randomColor } = require('./../bot');
+
         let memberUsername = message.member.displayName;
         let memberAvatar = message.author.displayAvatarURL();
         let recallMessage = message.content.slice(9).trim();

@@ -1,10 +1,11 @@
-const fetch = require('node-fetch');
-const CLIENT_ID = "4f739b764aaf428";
-
 module.exports = {
     name: "image",
     description: "search for image",
-    execute(message, args, getRandomInt, Discord) {
+    execute(message, args) {
+        const getRandomInt = require('./../bot');
+        const Discord = require('discord.js');
+        const fetch = require('node-fetch');
+        const CLIENT_ID = "4f739b764aaf428";
         const imageQuery = args.join("+");
 
         message.channel.send("Searching for " + imageQuery.split("+").join(" ").toLowerCase() + "...")
