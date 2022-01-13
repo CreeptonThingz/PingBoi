@@ -2,7 +2,7 @@ module.exports = {
     name: "idiot",
     description: "bully or get bullied",
     execute(message, args) {
-        const getRandomInt = require('./../bot');
+        const bot = require('./../bot');
 
         if (args.length === 0) {
             message.channel.send("Who's the idiot, you?");
@@ -11,7 +11,7 @@ module.exports = {
 
         let idiot;
 
-        switch (getRandomInt(2)) {
+        switch (bot.getRandomInt(2)) {
             case 0: 
                 idiot = message.author.id;
                 break;

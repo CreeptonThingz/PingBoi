@@ -2,9 +2,9 @@ module.exports = {
     name: "megumin",
     description: "megumin chants",
     execute(message) {
-        const getRandomInt = require('./../bot');
+        const bot = require('./../bot');
 
-        switch (getRandomInt(3)) {
+        switch (bot.getRandomInt(3)) {
             case 0:
                 message.channel.send(
                     "Darkness blacker than black and darker than dark,\n" +

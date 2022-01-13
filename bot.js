@@ -40,13 +40,13 @@ client.on('message', async message => {
 
     if (command === "help") { client.commands.get("help").execute(message); }
     
-    if (command === "expurosion") { client.commands.get("expurosion").execute(message, isDisabled, setDisabled, ownerID); }
-    if (command === "plotarmor") { client.commands.get("plotarmor").execute(message, isDisabled, setDisabled, ownerID);}
-    if (command === "monthlypfp") { client.commands.get("monthlypfp").execute(message, args, ownerID); }
+    if (command === "expurosion") { client.commands.get("expurosion").execute(message, isDisabled, setDisabled); }
+    if (command === "plotarmor") { client.commands.get("plotarmor").execute(message, isDisabled, setDisabled);}
+    if (command === "monthlypfp") { client.commands.get("monthlypfp").execute(message, args); }
 
     if (command === "ping") { client.commands.get("ping").execute(message, client); }
-    if (command === "disabled") { client.commands.get("disabled").execute(message, isDisabled); }
-    if (command === "pinging") { client.commands.get("pinging").execute(message, isPinging); }
+    if (command === "disabled") { client.commands.get("disabled").execute(message); }
+    if (command === "pinging") { client.commands.get("pinging").execute(message); }
 
     if (!isDisabled) {
         if (command === "spam") { client.commands.get("spam").execute(message, args, isPinging, setPinging, setSpamVictim, setSpamStarter, setMentionMessage, setSpamPing, client); }
@@ -104,9 +104,12 @@ function randomColor() {
 }
 
 module.exports = {
-    getRandomIntMin: getRandomIntMin,
-    getRandomInt: getRandomInt,
-    randomColor: randomColor
+    getRandomIntMin,
+    getRandomInt,
+    randomColor,
+    ownerID,
+    isPinging,
+    isDisabled
 };
 
 keepAlive();

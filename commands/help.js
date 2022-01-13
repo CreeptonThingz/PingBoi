@@ -1,9 +1,9 @@
-const Discord = require('discord.js')
 
 module.exports = {
     name: "help",
     description: "gives help page",
-    execute(message, Discord) {
+    execute(message) {
+        const Discord = require('discord.js')
         const commandsList = new Discord.MessageEmbed()
         .setColor("#ffffff")
         .setTitle("Command List")

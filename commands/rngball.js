@@ -2,7 +2,7 @@ module.exports = {
     name: "rngball",
     description: "8ball but better",
     execute(message, Discord) {
-        const { getRandomInt, randomColor } = require('./../bot');
+        const bot = require('./../bot');
 
         let memberUsername = message.member.displayName;
         let memberAvatar = message.author.displayAvatarURL();
@@ -43,10 +43,10 @@ module.exports = {
         ];
     
         const reply = new Discord.MessageEmbed()
-            .setColor("#" + randomColor())
+            .setColor("#" + bot.randomColor)
             .setAuthor(memberUsername + " asks, \"" +  recallMessage + "\"", memberAvatar)
             .setTitle("RNGBall says...")
-            .setDescription(phrases[getRandomInt(phrases.length)]);
+            .setDescription(phrases[bot.getRandomInt(phrases.length)]);
     
         if (recallMessage.length == 0 || recallMessage.toLowerCase().startsWith("is anime good")) {
             reply.setAuthor(memberUsername + " asks, \"Am I stupid?\"", memberAvatar);

@@ -2,9 +2,9 @@ module.exports = {
     name: "random",
     description: "gives a random int",
     execute(message, args) {
-        const { getRandomInt, getRandomIntMin } = require('./../bot');
+        const bot = require('./../bot');
 
-        // Errors
+        // Errors check
         if (args.length > 2) {
             message.channel.send("Too many inputs");
             return;
@@ -37,9 +37,9 @@ module.exports = {
         }
 
         if (args.length == 1) {
-            message.channel.send(getRandomInt(parseInt(args[0])+1)); 
+            message.channel.send(bot.getRandomInt(parseInt(args[0])+1)); 
         } else if (args.length == 2) {
-            message.channel.send(getRandomIntMin(parseInt(args[0]), parseInt(args[1])+1));
+            message.channel.send(bot.getRandomIntMin(parseInt(args[0]), parseInt(args[1])+1));
         }
     }
 }

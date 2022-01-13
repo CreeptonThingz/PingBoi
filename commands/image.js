@@ -2,7 +2,7 @@ module.exports = {
     name: "image",
     description: "search for image",
     execute(message, args) {
-        const getRandomInt = require('./../bot');
+        const bot = require('./../bot');
         const Discord = require('discord.js');
         const fetch = require('node-fetch');
         const CLIENT_ID = "4f739b764aaf428";
@@ -36,7 +36,7 @@ module.exports = {
                         return;
                     }
 
-                    let randomInt = getRandomInt(imgurData.data.length);
+                    let randomInt = bot.getRandomInt(imgurData.data.length);
                     imageTitle = imgurData.data[randomInt].title;
                     albumLink = imgurData.data[randomInt].link;
 
@@ -47,12 +47,12 @@ module.exports = {
                             .then(res => res.text())
                             .catch(err => console.error(err)));
 
-                        imageLink = albumData.data[getRandomInt(albumData.data.length)].link;
+                        imageLink = albumData.data[bot.getRandomInt(albumData.data.length)].link;
                     } else {
                         imageLink = albumLink;
                     }
                 } else {
-                    let randomInt = getRandomInt(imgurData.data.items.length-1);
+                    let randomInt = bot.getRandomInt(imgurData.data.items.length-1);
                     imageTitle = imgurData.data.items[randomInt].title;
                     albumLink = imgurData.data.items[randomInt].link;
                     
@@ -63,7 +63,7 @@ module.exports = {
                             .then(res => res.text())
                             .catch(err => console.error(err)));
 
-                        imageLink = albumData.data[getRandomInt(albumData.data.length)].link;
+                        imageLink = albumData.data[bot.getRandomInt(albumData.data.length)].link;
                     } else {
                         imageLink = albumLink;
                     }
