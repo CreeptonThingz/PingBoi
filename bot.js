@@ -28,12 +28,13 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     console.log("PingBoi is online");
-    client.user.setActivity("questionable content", { type: "WATCHING" });
+    client.user.setActivity("Jerry sleep", { type: "WATCHING" });
 });
 
 
 client.on('message', async message => {
-    if (!message.content.startsWith(prefix) || message.author.bot || message.guild == null) { return; }
+    // If message is from bot or from DMs
+    if (!message.content.startsWith(prefix) || message.author.bot || message.guild == null) { return; } 
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
@@ -56,9 +57,8 @@ client.on('message', async message => {
         if (command === "idiot") { client.commands.get("idiot").execute(message, args); }
         if (command === "ubw") { client.commands.get("ubw").execute(message); }
         if (command === "megumin") { client.commands.get("megumin").execute(message); }
-        if (command === "rngball") { client.commands.get("rngball").execute(message, Discord); }
+        if (command === "rngball") { client.commands.get("rngball").execute(message); }
         if (command === "random") { client.commands.get("random").execute(message, args); }
-        if (command === "module") { console.log(module); }
     }
 });
 

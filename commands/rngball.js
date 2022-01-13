@@ -1,7 +1,8 @@
 module.exports = {
     name: "rngball",
     description: "8ball but better",
-    execute(message, Discord) {
+    execute(message) {
+        const Discord = require('discord.js');
         const bot = require('./../bot');
 
         let memberUsername = message.member.displayName;
