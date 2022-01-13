@@ -16,6 +16,8 @@ let spamVictim;
 let spamStarter;
 let mentionMessage;
 
+let isDailyPinging = false;
+
 client.commands = new Discord.Collection();
 
 // filescan
@@ -51,7 +53,7 @@ client.on('message', async message => {
 
     if (!isDisabled) {
         if (command === "spam") { client.commands.get("spam").execute(message, args, isPinging, setPinging, setSpamVictim, setSpamStarter, setMentionMessage, setSpamPing, client); }
-        if (command === "stop") { client.commands.get("stop").execute(message, isPinging, setPinging, spamVictim, spamStarter, ownerID, spamCount, spamPing, client); }
+        if (command === "stop") { client.commands.get("stop").execute(message, args, isPinging, setPinging, spamVictim, spamStarter, ownerID, spamCount, spamPing, client); }
         if (command === "image") { client.commands.get("image").execute(message, args); }
         if (command === "say") { client.commands.get("say").execute(message, args); }
         if (command === "idiot") { client.commands.get("idiot").execute(message, args); }
@@ -109,7 +111,8 @@ module.exports = {
     randomColor,
     ownerID,
     isPinging,
-    isDisabled
+    isDisabled,
+    isDailyPinging
 };
 
 keepAlive();

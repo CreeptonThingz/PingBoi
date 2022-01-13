@@ -1,7 +1,7 @@
 module.exports = {
     name: "stop",
     description: "stop bullying",
-    execute(message, isPinging, setPinging, spamVictim, spamStarter, ownerID, spamCount, spamPing, client) {
+    execute(message, args, isPinging, setPinging, spamVictim, spamStarter, ownerID, spamCount, spamPing, client) {
         let messageAuthor = message.author.id;
 
         if (!isPinging) {
@@ -14,7 +14,7 @@ module.exports = {
 
             message.channel.send("https://i.redd.it/7rtkq25zvj751.jpg");
             message.channel.send(spamVictim.displayName + " was pinged " + spamCount + " times" + 
-                                "\nPinged for about " + hours + " hours " + minutes + " minutes " + seconds + " seconds.");
+                                "\nPinged for " + hours + " hours " + minutes + " minutes " + seconds + " seconds.");
             clearInterval(spamPing);
             setPinging(false);
             client.user.setActivity("questionable content", { type: "WATCHING" });
@@ -23,5 +23,11 @@ module.exports = {
             return;
         }
 
+        if (args[0].toLowerCase() == "daily") {
+            const monthlypfp = require("./monthlypfp");
+
+            clearInterval(monthlypfp.dailySpam);
+            message.channel.send("Bruh it took you " + monthlypfp.spamCount + " pings");
+        }
     }
 }
