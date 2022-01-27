@@ -1,13 +1,13 @@
 module.exports = {
     name: "rngball",
     description: "8ball but better",
-    execute(message) {
+    execute(message, args) {
         const Discord = require('discord.js');
         const bot = require('./../bot');
 
         let memberUsername = message.member.displayName;
         let memberAvatar = message.author.displayAvatarURL();
-        let recallMessage = message.content.slice(9).trim();
+        let recallMessage = args.join(" ");
     
         const phrases = [
             // Yes statements

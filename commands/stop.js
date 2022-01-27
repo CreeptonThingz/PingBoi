@@ -1,7 +1,7 @@
 module.exports = {
     name: "stop",
     description: "stop bullying",
-    execute(message, args, isPinging, setPinging, spamStarter, spamCount, spamPing, client) {
+    execute(message, args) {
         const spam = require("./spam");
         const bot = require("./../bot");
         
@@ -22,7 +22,7 @@ module.exports = {
                                     "\nPinged for " + hours + " hours " + minutes + " minutes " + seconds + " seconds.");
                 clearInterval(bot.spamPing);
                 bot.isPinging = false;
-                client.user.setActivity("questionable content", { type: "WATCHING" });
+                bot.client.user.setActivity(bot.defaultStatus, { type: "WATCHING" });
             } else {
                 message.channel.send("This does not concern you, go along now");
                 return;

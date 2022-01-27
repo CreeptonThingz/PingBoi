@@ -5,6 +5,7 @@ const keepAlive = require('./server.js');
 
 const prefix = '.';
 const ownerID = "162672579025436673";
+const defaultStatus = "primogems depleting";
 
 let isDisabled = false;
 
@@ -27,7 +28,7 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
     console.log("PingBoi is online");
-    client.user.setActivity("Jerry sleep", { type: "WATCHING" });
+    client.user.setActivity(defaultStatus, { type: "WATCHING" });
 });
 
 
@@ -40,30 +41,28 @@ client.on('message', async message => {
 
     if (command === "help") { client.commands.get("help").execute(message); }
     
-    if (command === "expurosion") { client.commands.get("expurosion").execute(message, isDisabled, setDisabled); }
-    if (command === "plotarmor") { client.commands.get("plotarmor").execute(message, isDisabled, setDisabled);}
+    if (command === "expurosion") { client.commands.get("expurosion").execute(message); }
+    if (command === "plotarmor") { client.commands.get("plotarmor").execute(message); }
     if (command === "monthlypfp") { client.commands.get("monthlypfp").execute(message, args); }
 
-    if (command === "ping") { client.commands.get("ping").execute(message, client); }
+    if (command === "ping") { client.commands.get("ping").execute(message); }
     if (command === "disabled") { client.commands.get("disabled").execute(message); }
     if (command === "pinging") { client.commands.get("pinging").execute(message); }
 
     if (!isDisabled) {
-        if (command === "spam") { client.commands.get("spam").execute(message, args, client); }
-        if (command === "stop") { client.commands.get("stop").execute(message, args, isPinging, setPinging, spamVictim, spamStarter, ownerID, spamCount, spamPing, client); }
+        if (command === "spam") { client.commands.get("spam").execute(message, args); }
+        if (command === "stop") { client.commands.get("stop").execute(message, args); }
         if (command === "image") { client.commands.get("image").execute(message, args); }
         if (command === "say") { client.commands.get("say").execute(message, args); }
         if (command === "idiot") { client.commands.get("idiot").execute(message, args); }
         if (command === "ubw") { client.commands.get("ubw").execute(message); }
         if (command === "megumin") { client.commands.get("megumin").execute(message); }
-        if (command === "rngball") { client.commands.get("rngball").execute(message); }
+        if (command === "rngball") { client.commands.get("rngball").execute(message, args); }
         if (command === "random") { client.commands.get("random").execute(message, args); }
     }
 });
 
 // Create functions to pass down
-function setDisabled(booleanVal) { isDisabled = booleanVal; }
-function setPinging(booleanVal) { isPinging = booleanVal; }
 function setSpamPing() { 
     const spam = require("./commands/spam");
     
@@ -105,12 +104,15 @@ module.exports = {
     getRandomIntMin,
     getRandomInt,
     randomColor,
+    setSpamPing,
 
     // Variables
     ownerID,
+    client,
     isPinging,
     isDisabled,
-    isDailyPinging
+    isDailyPinging,
+    defaultStatus
 };
 
 keepAlive();

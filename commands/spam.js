@@ -1,11 +1,9 @@
-let spamVictim;
-let spamStarter;
-let mentionMessage;
+let spamVictim, spamStarter, mentionMessage;
 
 module.exports = {
     name: "spam",
     description: "bullies someone",
-    execute(message, args, client) {      
+    execute(message, args) {      
         const bot = require("./../bot");
         
         if (bot.isPinging) { 
@@ -25,7 +23,7 @@ module.exports = {
             spamVictim.send(mentionMessage)
             .then(() => {
                 message.channel.send("Now pinging " + spamVictim.displayName);
-                client.user.setActivity("bully simulator", { type: "PLAYING" });
+                bot.client.user.setActivity("bully simulator", { type: "PLAYING" });
 
                 bot.isPinging = true;
                 bot.setSpamPing();
@@ -35,8 +33,8 @@ module.exports = {
                 console.error(err);
                 
                 message.channel.send("I am unable to bully them.");
-                client.user.setActivity("questionable content", { type: "WATCHING" });
-                setPinging(false);
+                bot.client.user.setActivity(bot.defaultStatus, { type: "WATCHING" });
+                bot.isPinging = false;
             });
         }
     },
