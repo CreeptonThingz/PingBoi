@@ -1,13 +1,19 @@
+let spamVictim;
+let spamStarter;
+let mentionMessage;
+
 module.exports = {
     name: "spam",
     description: "bullies someone",
-    execute(message, args, isPinging, setPinging, setSpamVictim, setSpamStarter, setMentionMessage, setSpamPing, client) {      
-        if (isPinging) { 
+    execute(message, args, client) {      
+        const bot = require("./../bot");
+        
+        if (bot.isPinging) { 
             message.channel.send("The transmutation circle is currently being used.");
         } else {
-            let spamVictim = message.mentions.members.first();
-            let spamStarter = message.author;
-            let mentionMessage = args.join(" ");
+            spamVictim = message.mentions.members.first();
+            spamStarter = message.author;
+            mentionMessage = args.join(" ");
 
             if (spamVictim == null) {
                 for (let i = 0; i < 5; i++) {
@@ -21,11 +27,8 @@ module.exports = {
                 message.channel.send("Now pinging " + spamVictim.displayName);
                 client.user.setActivity("bully simulator", { type: "PLAYING" });
 
-                setMentionMessage(mentionMessage);
-                setSpamVictim(spamVictim);
-                setSpamStarter(spamStarter);
-                setPinging(true);
-                setSpamPing();
+                bot.isPinging = true;
+                bot.setSpamPing();
                 
             })
             .catch(err => {
@@ -36,5 +39,8 @@ module.exports = {
                 setPinging(false);
             });
         }
-    }
+    },
+    spamVictim,
+    spamStarter,
+    mentionMessage
 }

@@ -25,9 +25,10 @@ module.exports = {
         message.channel.send(user1 + " gets " + randChar1);
         message.channel.send(user2 + " gets " + randChar2);
     
-
         // Initiate Daily spam
         dailySpam = setInterval(function() {
+            spamCount = 1;
+            
             message.channel.send("<!" + aCertainGuyID + "> gets " + randChar2)
                 .catch(err => {
                     console.error(err);

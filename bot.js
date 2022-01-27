@@ -12,9 +12,6 @@ let isDisabled = false;
 let isPinging = false;
 let spamPing;
 let spamCount = 0;
-let spamVictim;
-let spamStarter;
-let mentionMessage;
 
 let isDailyPinging = false;
 
@@ -52,7 +49,7 @@ client.on('message', async message => {
     if (command === "pinging") { client.commands.get("pinging").execute(message); }
 
     if (!isDisabled) {
-        if (command === "spam") { client.commands.get("spam").execute(message, args, isPinging, setPinging, setSpamVictim, setSpamStarter, setMentionMessage, setSpamPing, client); }
+        if (command === "spam") { client.commands.get("spam").execute(message, args, client); }
         if (command === "stop") { client.commands.get("stop").execute(message, args, isPinging, setPinging, spamVictim, spamStarter, ownerID, spamCount, spamPing, client); }
         if (command === "image") { client.commands.get("image").execute(message, args); }
         if (command === "say") { client.commands.get("say").execute(message, args); }
@@ -67,21 +64,19 @@ client.on('message', async message => {
 // Create functions to pass down
 function setDisabled(booleanVal) { isDisabled = booleanVal; }
 function setPinging(booleanVal) { isPinging = booleanVal; }
-function setSpamCount(num) { spamCount = num; }
-function setSpamVictim(user) { spamVictim = user; }
-function setSpamStarter(user) { spamStarter = user; }
-function setMentionMessage(message) { mentionMessage = message; }
 function setSpamPing() { 
+    const spam = require("./commands/spam");
+    
     spamCount = 1;
 
     spamPing = setInterval(function() {
-        spamVictim.send(mentionMessage)
+        spam.spamVictim.send(mentionMessage)
             .catch(err => {
                 console.error(err);
 
-                message.channel.send(spamVictim.displayName + " blocked me lol");
+                message.channel.send(spam.spamVictim.displayName + " blocked me lol");
                 clearInterval(spamPing);
-                setPinging(false);
+                isPinging = false;
             });
 
         spamCount++;
@@ -106,9 +101,12 @@ function randomColor() {
 }
 
 module.exports = {
+    // Functions
     getRandomIntMin,
     getRandomInt,
     randomColor,
+
+    // Variables
     ownerID,
     isPinging,
     isDisabled,
