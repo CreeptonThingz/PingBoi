@@ -3,12 +3,26 @@
   "version": "1.0.0",
   "description": "Discord Bot",
   "main": "bot.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node server.js"
+  },
   "author": "Creepton",
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "node-fetch": "^2.6.6"
-  }
+  },
+  "devDependencies": {
+    "node": "^16.13.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CreeptonThingz/PingBoi.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/CreeptonThingz/PingBoi/issues"
+  },
+  "homepage": "https://github.com/CreeptonThingz/PingBoi#readme"
 }

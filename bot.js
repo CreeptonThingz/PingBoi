@@ -5,14 +5,14 @@ const keepAlive = require('./server.js');
 
 const prefix = '.';
 const ownerID = "162672579025436673";
-const defaultStatus = "primogems depleting";
+const defaultStatus = "";
 
 let isDisabled = false;
 
 // spam/stop command stuff
 let isPinging = false;
 let spamPing;
-let spamCount = 0;
+let spamCount;
 
 let isDailyPinging = false;
 
@@ -30,7 +30,6 @@ client.once('ready', () => {
     console.log("PingBoi is online");
     client.user.setActivity(defaultStatus, { type: "WATCHING" });
 });
-
 
 client.on('message', async message => {
     // If message is from bot or from DMs
@@ -69,17 +68,21 @@ function setSpamPing() {
     spamCount = 1;
 
     spamPing = setInterval(function() {
-        spam.spamVictim.send(mentionMessage)
+        spam.spamVictim.send(spam.mentionMessage)
             .catch(err => {
                 console.error(err);
 
                 message.channel.send(spam.spamVictim.displayName + " blocked me lol");
                 clearInterval(spamPing);
                 isPinging = false;
+                module.exports.isPinging = false;
             });
 
         spamCount++;
+        module.exports.spamCount = spamCount;
     }, 2000);
+
+    module.exports.spamPing = spamPing;
 }
 
 // min inclusive, max exclusive
@@ -106,13 +109,17 @@ module.exports = {
     randomColor,
     setSpamPing,
 
-    // Variables
+    // Constant Variables
     ownerID,
+    Discord,
     client,
+    defaultStatus,
+
+    // Updating Variables
     isPinging,
     isDisabled,
     isDailyPinging,
-    defaultStatus
+    spamPing,
 };
 
 keepAlive();
