@@ -1,4 +1,11 @@
-let spamVictim = "", spamStarter = "", mentionMessage = "";
+let spamVictim = "";
+let spamStarter = "";
+let mentionMessage = ""
+let spamCount = 0;
+let spamPing;
+
+let dailySpam;
+let dailySpamCount = 0;
 
 function execute(message, args) {
     const bot = require("./../bot");
@@ -27,7 +34,7 @@ function execute(message, args) {
             module.exports.mentionMessage = mentionMessage;
             bot.isPinging = true;
             
-            bot.setSpamPing();  
+            setSpamPing(bot);  
         })
         .catch(err => {
             console.error(err);
@@ -39,11 +46,59 @@ function execute(message, args) {
     }
 }
 
+function setSpamPing(bot) {     
+    spamCount = 1;
+
+    spamPing = setInterval(function() {
+        spam.spamVictim.send(spam.mentionMessage)
+            .catch(err => {
+                console.error(err);
+
+                message.channel.send(spam.spamVictim.displayName + " blocked me lol");
+                clearInterval(spamPing);
+                bot.isPinging = false;
+            });
+
+        module.exports.spamCount = ++spamCount;
+    }, 2000);
+
+    module.exports.spamPing = spamPing;
+}
+
+function startDailySpam(id, char, bot) {
+    dailySpamCount = 0;
+    bot.isDailyPinging = true;
+  
+    // Initiate Daily spam
+    dailySpam = setInterval(function() {
+        message.channel.send("<!" + id + "> gets " + char)
+            .catch(err => {
+                console.error(err);
+
+                message.channel.send("Error lmoa");
+                clearInterval(dailySpam);
+                bot.isDailyPinging = false;
+            });
+
+        module.exports.dailySpamCount = dailySpamCount++;
+    }, 86400000); // 1 day interval = 86.4M ms
+
+    module.exports.dailySpam = dailySpam;
+}
+
 module.exports = {
     name: "spam",
     description: "bullies someone",
+    
     execute,
+    startDailySpam,
+    
     spamVictim,
     spamStarter,
-    mentionMessage
+    mentionMessage,
+    spamCount,
+    spamPing,
+    
+    dailySpam,
+    dailySpamCount
 }

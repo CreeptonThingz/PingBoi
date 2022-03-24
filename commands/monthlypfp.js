@@ -1,8 +1,7 @@
-let dailySpam;
-let spamCount = 0;
-
 function execute(message, args) {
     const bot = require('./../bot');
+    const spam = require("./spam");
+  
     let aCertainGuyID = 162676746108272640;
 
     if (message.author.id != bot.ownerID) {
@@ -22,26 +21,11 @@ function execute(message, args) {
     message.channel.send(user1 + " gets " + randChar1);
     message.channel.send(user2 + " gets " + randChar2);
 
-    // Initiate Daily spam
-    // dailySpam = setInterval(function() {
-    //     spamCount = 1;
-        
-    //     message.channel.send("<!" + aCertainGuyID + "> gets " + randChar2)
-    //         .catch(err => {
-    //             console.error(err);
-
-    //             message.channel.send("Error lmoa");
-    //             clearInterval(dailySpam);
-    //         });
-
-    //     spamCount++;
-    // }, 86400000); // 1 day interval = 86.4M ms
+    spam.startDailySpam(aCertainGuyID, char, bot);
 }
 
 module.exports = {
     name: "monthlypfp",
     description: "randomizes monthly pfp",
     execute,
-    dailySpam,
-    spamCount
 }

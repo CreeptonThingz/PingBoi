@@ -5,15 +5,10 @@ const keepAlive = require('./server.js');
 
 const prefix = '.';
 const ownerID = "162672579025436673";
-const defaultStatus = "";
+const defaultStatus = "Jerry lose the 50/50";
 
 let isDisabled = false;
-
-// spam/stop command stuff
 let isPinging = false;
-let spamPing;
-let spamCount;
-
 let isDailyPinging = false;
 
 client.commands = new Discord.Collection();
@@ -61,30 +56,6 @@ client.on('message', async message => {
     }
 });
 
-// Create functions to pass down
-function setSpamPing() { 
-    const spam = require("./commands/spam");
-    
-    spamCount = 1;
-
-    spamPing = setInterval(function() {
-        spam.spamVictim.send(spam.mentionMessage)
-            .catch(err => {
-                console.error(err);
-
-                message.channel.send(spam.spamVictim.displayName + " blocked me lol");
-                clearInterval(spamPing);
-                isPinging = false;
-                module.exports.isPinging = false;
-            });
-
-        spamCount++;
-        module.exports.spamCount = spamCount;
-    }, 2000);
-
-    module.exports.spamPing = spamPing;
-}
-
 // min inclusive, max exclusive
 function getRandomIntMin(min, max) {
     min = Math.ceil(min);
@@ -107,7 +78,6 @@ module.exports = {
     getRandomIntMin,
     getRandomInt,
     randomColor,
-    setSpamPing,
 
     // Constant Variables
     ownerID,
@@ -119,7 +89,6 @@ module.exports = {
     isPinging,
     isDisabled,
     isDailyPinging,
-    spamPing,
 };
 
 keepAlive();
