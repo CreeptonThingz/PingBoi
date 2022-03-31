@@ -53,6 +53,7 @@ client.on('message', async message => {
         if (command === "megumin") { client.commands.get("megumin").execute(message); }
         if (command === "rngball") { client.commands.get("rngball").execute(message, args); }
         if (command === "random") { client.commands.get("random").execute(message, args); }
+        if (command === "burstspam") { client.commands.get("burstspam").execute(message, args);  }
     }
 });
 

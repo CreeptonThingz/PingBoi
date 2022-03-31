@@ -1,3 +1,4 @@
+const mySecret = process.env['logintoken']
 let spamVictim = "";
 let spamStarter = "";
 let mentionMessage = ""
