@@ -50,11 +50,11 @@ function setSpamPing(bot) {
     spamCount = 1;
 
     spamPing = setInterval(function() {
-        spam.spamVictim.send(spam.mentionMessage)
+        spamVictim.send(mentionMessage)
             .catch(err => {
                 console.error(err);
 
-                message.channel.send(spam.spamVictim.displayName + " blocked me lol");
+                message.channel.send(spamVictim.displayName + " blocked me lol");
                 clearInterval(spamPing);
                 bot.isPinging = false;
             });

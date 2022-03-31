@@ -17,10 +17,11 @@ function execute(message, args) {
         "Sure why not",
         "Yellow \nEmeralds \nSuck",
         ":thumbsup:",
+        "Obviously",
 
         // No statements
         "No",
-        "No! It's not an ecchi anime, how many times have I told you this? The story is god-tier so watch it",
+        "Obviously not",
         "*Shakes head*",
         "You better not",
         "Did you say you're stupid? No? Well I guess there's your answer",
@@ -28,6 +29,7 @@ function execute(message, args) {
         "How about ***no***",
         "Negative \nOperation",
         ":thumbsdown:",
+        "Denied",
 
         // Other statements
         "Uhm...",
@@ -39,7 +41,8 @@ function execute(message, args) {
         "You're kidding, right?",
         "Look! Squirrel! *Runs away*",
         "It is but in my greatest knowledge that I must beseech you upon my answer that currently stands unknown",
-        "Did you know that the age of consent is 18 years old?"
+        "Did you know that the age of consent is 18 years old?",
+        "No! It's not an ecchi anime, how many times have I told you this? The story is god-tier so watch it"
     ];
 
     const reply = new bot.Discord.MessageEmbed()
