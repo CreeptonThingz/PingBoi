@@ -2,8 +2,7 @@ function execute(message, args) {
     console.log(cooldown);
   
     if (cooldown == null) {
-        spamVictim = message.mentions.members.first();
-        mentionMessage = args.join("");
+        mentionMessage = args.join(" ");
     
         if (spamVictim == null) {
             for (let i = 0; i < 3; i++) {
@@ -13,7 +12,7 @@ function execute(message, args) {
         }
       
         for (let i = 0; i < 3; i++) {
-            spamVictim.send(mentionMessage);
+            message.channel.send(mentionMessage);
         }
 
         cooldown = setTimeout(() => {
