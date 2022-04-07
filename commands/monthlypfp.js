@@ -21,7 +21,7 @@ function execute(message, args) {
     message.channel.send(user1 + " gets " + randChar1);
     message.channel.send(user2 + " gets " + randChar2);
 
-    spam.startDailySpam(aCertainGuyID, char, bot);
+    spam.startDailySpam(aCertainGuyID, randChar2, bot);
 }
 
 module.exports = {

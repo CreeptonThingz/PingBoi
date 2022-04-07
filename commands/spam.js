@@ -66,13 +66,13 @@ function setSpamPing(bot) {
     module.exports.spamPing = spamPing;
 }
 
-function startDailySpam(id, char, bot) {
+function startDailySpam(id, character, bot) {
     dailySpamCount = 0;
     bot.isDailyPinging = true;
   
     // Initiate Daily spam
     dailySpam = setInterval(function() {
-        message.channel.send("<!" + id + "> gets " + char)
+        message.channel.send("<!" + id + "> gets " + character)
             .catch(err => {
                 console.error(err);
 
