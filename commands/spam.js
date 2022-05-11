@@ -55,7 +55,7 @@ function setSpamPing(bot) {
             .catch(err => {
                 console.error(err);
 
-                message.channel.send(spamVictim.displayName + " blocked me lol");
+                client.users.fetch(bot.ownerID).then(owner => owner.send("error: " + err));
                 clearInterval(spamPing);
                 bot.isPinging = false;
             });

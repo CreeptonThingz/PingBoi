@@ -5,7 +5,7 @@ const keepAlive = require('./server.js');
 
 const prefix = '.';
 const ownerID = "162672579025436673";
-const defaultStatus = "Jerry lose the 50/50";
+const defaultStatus = "AP scores coming back as 0";
 
 let isDisabled = false;
 let isPinging = false;
@@ -44,6 +44,7 @@ client.on('message', async message => {
     if (command === "pinging") { client.commands.get("pinging").execute(message); }
 
     if (!isDisabled) {
+        if (command === "test") { client.commands.get("test").execute(message, args); }
         if (command === "spam") { client.commands.get("spam").execute(message, args); }
         if (command === "stop") { client.commands.get("stop").execute(message, args); }
         if (command === "image") { client.commands.get("image").execute(message, args); }
