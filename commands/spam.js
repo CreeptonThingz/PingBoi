@@ -1,4 +1,3 @@
-const mySecret = process.env['logintoken']
 let spamVictim = "";
 let spamStarter = "";
 let mentionMessage = ""
@@ -39,7 +38,7 @@ function execute(message, args) {
         })
         .catch(err => {
             console.error(err);
-            
+
             message.channel.send("I am unable to bully them.");
             bot.client.user.setActivity(bot.defaultStatus, { type: "WATCHING" });
             bot.isPinging = false;
@@ -55,7 +54,7 @@ function setSpamPing(bot) {
             .catch(err => {
                 console.error(err);
 
-                client.users.fetch(bot.ownerID).then(owner => owner.send("error: " + err));
+                bot.client.users.cache.get(bot.ownerID).send("error: " + err)
                 clearInterval(spamPing);
                 bot.isPinging = false;
             });

@@ -15,7 +15,7 @@ function execute(message, args) {
             if (!bot.isPinging) {
                 message.channel.send("What ever do you mean \"stop\"?");
                 return;
-            } else if (messageAuthor == spam.spamVictim.id || messageAuthor == spam.spamStarter.id || messageAuthor == bot.ownerID) {              
+            } else if (messageAuthor == spam.spamVictim.id || messageAuthor == spam.spamStarter.id || messageAuthor == bot.ownerID) {
                 seconds = (spam.spamCount%30)*2;
                 hours = Math.floor(spam.spamCount/1800);
                 minutes = Math.floor(spam.spamCount/30);
@@ -31,13 +31,13 @@ function execute(message, args) {
                 return;
             }
             break;
-        // Stop daily spam (for aidan)
-        case "daily":
-            clearInterval(spam.dailySpam);
-            message.channel.send("Bruh it took you " + spam.dailySpamCount + " days");    
-            break;
-        default:
-          break;             
+      // Stop daily spam (for aidan)
+      case "daily":
+          clearInterval(spam.dailySpam);
+          message.channel.send("Bruh it took you " + spam.dailySpamCount + " days");    
+          break;
+      default:
+        break;             
     }
 }
 
