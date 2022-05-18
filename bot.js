@@ -24,6 +24,7 @@ for (const file of commandFiles) {
 client.once('ready', () => {
     console.log("PingBoi is online");
     client.user.setActivity(defaultStatus, { type: "WATCHING" });
+    // client.user.fetch(ownerID).then(() => send("Bot Logged In"));
 });
 
 client.on('message', async message => {

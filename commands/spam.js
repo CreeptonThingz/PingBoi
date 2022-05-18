@@ -7,6 +7,8 @@ let spamPing;
 let dailySpam;
 let dailySpamCount = 0;
 
+let currentSession = "";
+
 function execute(message, args) {
     const bot = require("./../bot");
   
@@ -58,9 +60,21 @@ function setSpamPing(bot) {
                 clearInterval(spamPing);
                 bot.isPinging = false;
             });
-
+      
         module.exports.spamCount = ++spamCount;
-    }, 2000);
+
+        currentSession = "";
+      
+        let hours = Math.round(spamCount/1200);
+        let minutes = Math.round(spamCount/20 - hours*60);
+        let seconds = Math.round(spamCount*3 - minutes*60);
+    
+        if (hours != 0) { currentSession += hours.toString() + " hours, "; }
+        if (minutes != 0) { currentSession += minutes.toString() + " minutes, "; }
+        if (seconds != 0) { currentSession += seconds.toString() + " seconds "; }
+    
+        module.exports.currentSession = currentSession;
+    }, 3000);
 
     module.exports.spamPing = spamPing;
 }
@@ -100,5 +114,7 @@ module.exports = {
     spamPing,
     
     dailySpam,
-    dailySpamCount
+    dailySpamCount,
+
+    currentSession,
 }
