@@ -4,9 +4,6 @@ let mentionMessage = ""
 let spamCount = 0;
 let spamPing;
 
-let dailySpam;
-let dailySpamCount = 0;
-
 let currentSession = "";
 
 function execute(message, args) {
@@ -58,11 +55,12 @@ function setSpamPing(bot) {
 
                 bot.client.users.cache.get(bot.ownerID).send("error: " + err)
                 clearInterval(spamPing);
-                bot.isPinging = false;
+                bot.isPinging = false;.
             });
       
         module.exports.spamCount = ++spamCount;
 
+        // Calculate time pinging
         currentSession = "";
       
         let hours = Math.round(spamCount/1200);
@@ -79,42 +77,17 @@ function setSpamPing(bot) {
     module.exports.spamPing = spamPing;
 }
 
-function startDailySpam(id, character, bot) {
-    dailySpamCount = 0;
-    bot.isDailyPinging = true;
-  
-    // Initiate Daily spam
-    dailySpam = setInterval(function() {
-        message.channel.send("<!" + id + "> gets " + character)
-            .catch(err => {
-                console.error(err);
-
-                message.channel.send("Error lmoa");
-                clearInterval(dailySpam);
-                bot.isDailyPinging = false;
-            });
-
-        module.exports.dailySpamCount = dailySpamCount++;
-    }, 86400000); // 1 day interval = 86.4M ms
-
-    module.exports.dailySpam = dailySpam;
-}
-
 module.exports = {
     name: "spam",
     description: "bullies someone",
     
     execute,
-    startDailySpam,
     
     spamVictim,
     spamStarter,
     mentionMessage,
     spamCount,
     spamPing,
-    
-    dailySpam,
-    dailySpamCount,
 
     currentSession,
 }

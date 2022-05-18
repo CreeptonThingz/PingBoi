@@ -1,6 +1,5 @@
 function execute(message, args) {
     const bot = require('./../bot');
-    const spam = require("./spam");
   
     let aCertainGuyID = 162676746108272640;
 
@@ -20,8 +19,6 @@ function execute(message, args) {
 
     message.channel.send(user1 + " gets " + randChar1);
     message.channel.send(user2 + " gets " + randChar2);
-
-    spam.startDailySpam(aCertainGuyID, randChar2, bot);
 }
 
 module.exports = {
