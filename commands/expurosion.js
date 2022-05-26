@@ -1,4 +1,10 @@
-function execute(message, isDisabled, setDisabled) {
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+const data = new SlashCommandBuilder()
+    .setName("expurosion")
+    .setDescription("Disables bot");
+
+async function execute(message) {
     const bot = require("./../bot");
 
     if (bot.isDisabled) {
@@ -15,7 +21,6 @@ function execute(message, isDisabled, setDisabled) {
 }
 
 module.exports = {
-    name: "expurosion",
-    description: "disables bot",
-    execute,
+    data,
+    execute
 }

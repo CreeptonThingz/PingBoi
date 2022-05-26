@@ -1,4 +1,10 @@
-function execute(message) {
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+const data = new SlashCommandBuilder()
+    .setName("disabled")
+    .setDescription("Checks disabled status of bot");
+
+async function execute(message) {
     const bot = require('./../bot');
 
     let status = bot.isDisabled ? "PingBoi is currently disabled" : "PingBoi is currently enabled";
@@ -7,7 +13,6 @@ function execute(message) {
 }
 
 module.exports = {
-    name: "disabled",
-    description: "checks status of bot",
-    execute,
+    data,
+    execute
 }

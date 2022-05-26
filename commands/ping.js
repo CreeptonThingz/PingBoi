@@ -1,11 +1,16 @@
-function execute(message) {
-    const bot = require("./../bot");
+const SlashCommandBuilder = required('@discordjs/builders');
 
-    message.channel.send(`${Math.round(bot.lient.ws.ping)} ms`);
+const data = new SlashCommandBuilder()
+    .setName("ping")
+    .setDescription("Check latency");
+
+function execute(message) {
+    const bot = require("./../bot.js");
+
+    message.channel.send(`${Math.round(bot.client.ws.ping)} ms`);
 }
 
 module.exports = {
-    name: "ping",
-    description: "this is a ping command",
-    execute,
+    data,
+    execute
 }

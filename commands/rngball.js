@@ -46,7 +46,7 @@ function execute(message, args) {
     ];
 
     const reply = new bot.Discord.MessageEmbed()
-        .setColor("#" + bot.randomColor)
+        .setColor("#" + bot.randomColor())
         .setAuthor(memberUsername + " asks, \"" +  recallMessage + "\"", memberAvatar)
         .setTitle("RNGBall says...")
         .setDescription(phrases[bot.getRandomInt(phrases.length)]);

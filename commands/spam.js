@@ -55,7 +55,7 @@ function setSpamPing(bot) {
 
                 bot.client.users.cache.get(bot.ownerID).send("error: " + err)
                 clearInterval(spamPing);
-                bot.isPinging = false;.
+                bot.isPinging = false;
             });
       
         module.exports.spamCount = ++spamCount;

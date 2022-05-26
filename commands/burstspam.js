@@ -1,4 +1,10 @@
-function execute(message, args) {
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+const data = new SlashCommandBuilder()
+    .setName("burstspam")
+    .setDescription("Ping in a burst");
+
+async function execute(message, args) {
     console.log(cooldown);
   
     if (cooldown == null) {
@@ -24,7 +30,6 @@ function execute(message, args) {
 }
 
 module.exports = {
-    name: "burstspam",
-    description: "Quick spam",
-    execute,
+    data,
+    execute
 }
