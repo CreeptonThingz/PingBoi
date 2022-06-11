@@ -1,7 +1,6 @@
 const { Client, Intents, Collection } = require('discord.js');
-require('dotenv').config();
-
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const keepAlive = require('./server.js');
 
 const ownerID = "162672579025436673";
 const defaultStatus = "AP scores coming back as 0";
@@ -15,14 +14,14 @@ client.commands = new Collection();
 const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.data.name, command);
+  	const command = require(`./commands/${file}`);
+  	client.commands.set(command.data.name, command);
 }
 
 
 // Client stuff
 client.once('ready', () => {
-	console.log('Ready!');
+  	console.log('Ready!');
 });
 
 client.on('interactionCreate', async interaction => {
@@ -75,5 +74,7 @@ module.exports = {
 	isDisabled
 }
 
-client.login(process.env.TOKEN);
+keepAlive();
+
+client.login(process.env['TOKEN']);
 

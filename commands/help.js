@@ -30,11 +30,12 @@ async function execute(interaction) {
         { name: ".image <search query>", value: "\"Maybe I can finally find some ecchi pictures\"" },
         { name: ".say <message>", value: "Ever wanted to go incognito?" },
         { name: ".idiot <mentioned user>", value: "Take a risk, lose your pride or harm another's pride" },
-        { name: ".UBW", value: "Receive the chant that \"Archer\" says"},
+        { name: ".ubw", value: "Receive the chant that \"Archer\" says"},
         { name: ".megumin", value: "Receive the chant that the almighty Megumin says to defeat her foes" },
         { name: ".rngBall <message>", value: "It's 100% RNG I swear" },
-        { name: ".random <maximum> OR .random <mininmum> <maximum>", value: "It's still 100% RNG I swear" }
-        // 2 fields remaining
+        { name: ".random <maximum> OR .random <mininmum> <maximum>", value: "It's still 100% RNG I swear" },
+        { name: ".burstspam <mentioned user>", value: "Abuse mental state in a burst"}
+        // 1 field remaining
     )
     .setTimestamp()
     .setFooter({ text: "Copyright Probably PingBoi", iconURL: "https://i.ytimg.com/vi/oPW3vVWcc8s/maxresdefault.jpg"});
