@@ -1,96 +1,31 @@
-function execute(message, args) {
-    const bot = require('./../bot');
-    const fetch = require('node-fetch');
-    const CLIENT_ID = "4f739b764aaf428";
-    const imageQuery = args.join("+");
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
-    message.channel.send("Searching for " + imageQuery.split("+").join(" ").toLowerCase() + "...")
-        .then(async msg => { // search for tag first and switch to plan b if undefined
-            let imageEmbed, imageTitle, imageLink, albumLink;
-
-            let url = "https://api.imgur.com/3/gallery/t/" + imageQuery + "/viral/all/"   
-            let imgurOptions = {
-                headers: {
-                    "Authorization": "Client-ID " + CLIENT_ID
-                },
-                method: "GET"
-            }
+async function execute(interaction) {
+    const bot = require('./../bot.js');
+    const SerpApi = require('google-search-results-nodejs');
+    const search = new SerpApi.GoogleSearch("44a20c71539654ff8e754c35d6326bf23fe34652c5f9468d9a8d752ec7609112");
     
-            let imgurData = JSON.parse(await fetch(url, imgurOptions)
-                .then(res => res.text())
-                .catch(err => console.error(err)));
-
-            if (imgurData.data.total_items <= 0) { // If tag is empty
-                url = "https://api.imgur.com/3/gallery/search/viral/all/?q=" + imageQuery;
-                imgurData = JSON.parse(await fetch(url, imgurOptions)
-                    .then(res => res.text())
-                    .catch(err => console.error(err)));
-
-                if (imgurData.data.length == 0) {
-                    msg.delete();
-                    message.channel.send("Could not find image");
-                    return;
-                }
-
-                let randomInt = bot.getRandomInt(imgurData.data.length);
-                imageTitle = imgurData.data[randomInt].title;
-                albumLink = imgurData.data[randomInt].link;
-
-                if (imgurData.data[randomInt].is_album) {
-                    url = "https://api.imgur.com/3/album/" + imgurData.data[randomInt].id + "/images";
-
-                    let albumData = JSON.parse(await fetch(url, imgurOptions)
-                        .then(res => res.text())
-                        .catch(err => console.error(err)));
-
-                    imageLink = albumData.data[bot.getRandomInt(albumData.data.length)].link;
-                } else {
-                    imageLink = albumLink;
-                }
-            } else {
-                let randomInt = bot.getRandomInt(imgurData.data.items.length-1);
-                imageTitle = imgurData.data.items[randomInt].title;
-                albumLink = imgurData.data.items[randomInt].link;
-                
-                if (imgurData.data.items[randomInt].is_album) { // If selection is an album of images
-                    url = "https://api.imgur.com/3/album/" + imgurData.data.items[randomInt].id + "/images";
-
-                    let albumData = JSON.parse(await fetch(url, imgurOptions)
-                        .then(res => res.text())
-                        .catch(err => console.error(err)));
-
-                    imageLink = albumData.data[bot.getRandomInt(albumData.data.length)].link;
-                } else {
-                    imageLink = albumLink;
-                }
-            }
-
-            // Errors: if .mp4 file, if no result
-
-            if (imageLink.endsWith(".mp4") || imageLink.endsWith(".gif")) {
-                msg.delete();
-                message.channel.send(imageTitle + "\n" + albumLink);
-                return;
-            }
-
-            imageEmbed = new bot.Discord.MessageEmbed()
-                .setColor("#89C623")
-                .setTitle(imageTitle)
-                .setURL(albumLink)
-                .setImage(imageLink)
-                .setTimestamp();
-
-            msg.delete();
-            message.channel.send(imageEmbed);
-        })
-        .catch(err =>  {
-            console.error(err);
-            return;
-        });
+    const params = {
+        engine: "google",
+        q: interaction.options.getString("query").split(" ").join("+"),
+        google_domain: "google.com",
+        gl: "us",
+        hl: "en",
+        tbm: "isch"
+    };
+    
+    search.json(params, (data) => 
+        interaction.reply(data["images_results"][bot.getRandomInt(data["images_results"].length)]["original"])
+            .catch(err => {
+                console.error(err);
+                interaction.reply({ content: "Uh oh something broke", ephemeral: true });
+            }));
 }
 
 module.exports = {
-    name: "image",
-    description: "search for image",
-    execute,
+    data: new SlashCommandBuilder()
+        .setName("image")
+        .setDescription("Search for image")
+        .addStringOption(option => option.setName("query").setDescription("Input Search Query").setRequired(true)),
+    execute
 }

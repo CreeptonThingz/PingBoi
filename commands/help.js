@@ -1,9 +1,11 @@
-function execute(message) {
-    const bot = require("./../bot.js");
-    const commandsList = new bot.Discord.MessageEmbed()
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
+
+async function execute(interaction) {    
+    const commandList = new MessageEmbed()
     .setColor("#ffffff")
     .setTitle("Command List")
-    .setAuthor("\"It's not like I wanted to help you or anything\"", "https://static.wikia.nocookie.net/doki-doki-literature-club/images/2/2b/Natsuki_Illustration.png/revision/latest/top-crop/width/360/height/360?cb=20190227205202")
+    .setAuthor({ name: "It's not like a wanted to help you or anything", iconURL: "https://static.wikia.nocookie.net/doki-doki-literature-club/images/2/2b/Natsuki_Illustration.png/revision/latest/top-crop/width/360/height/360?cb=20190227205202" })
     .setDescription("Confused on a command because every single command does something randomly weird?")
     .addFields(
         { name: "\u200B", value: "\u200B" }, // Spacer
@@ -31,17 +33,18 @@ function execute(message) {
         { name: ".UBW", value: "Receive the chant that \"Archer\" says"},
         { name: ".megumin", value: "Receive the chant that the almighty Megumin says to defeat her foes" },
         { name: ".rngBall <message>", value: "It's 100% RNG I swear" },
-        { name: ".random <number> OR .random <mininmum> <maximum>", value: "It's still 100% RNG I swear" }
+        { name: ".random <maximum> OR .random <mininmum> <maximum>", value: "It's still 100% RNG I swear" }
         // 2 fields remaining
     )
     .setTimestamp()
-    .setFooter("Copyright Probably PingBoi");
+    .setFooter({ text: "Copyright Probably PingBoi", iconURL: "https://i.ytimg.com/vi/oPW3vVWcc8s/maxresdefault.jpg"});
 
-    message.channel.send(commandsList);
+    interaction.reply({ embeds: [commandList] });
 }
 
 module.exports = {
-    name: "help",
-    description: "gives help page",
+    data: new SlashCommandBuilder()
+        .setName("help")
+        .setDescription("Get help page"),
     execute,
 }

@@ -1,28 +1,32 @@
-function execute(message, args) {
-    const bot = require('./../bot');
-  
-    let aCertainGuyID = 162676746108272640;
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
-    if (message.author.id != bot.ownerID) {
-        message.channel.send("One must have knowledge of all past selves before gaining the authority of this command (Ur dumb lmoa)");
+async function execute(interaction) {
+    const bot = require('./../bot.js');
+
+    if (interaction.user.id !== bot.ownerID) {
+        interaction.reply({ content: "One must have knowledge of all past selves before gaining the authority of this command (Ur dumb lmoa)", ephemeral: true });
         return;
     }
 
-    let user1 = args.shift();
-    let user2 = args.shift();
+    let user1 = interaction.options.getUser("user1");
+    let user2 = interaction.options.getUser("user2");
+    let characters = interaction.options.getString("characters").split(" ");
 
-    randChar1 = args[bot.getRandomInt(args.length)];
-    args.splice(args.indexOf(randChar1), 1);
+    let randChar1 = characters[bot.getRandomInt(characters.length)];
+    characters.splice(characters.indexOf(randChar1));
+    let randChar2 = characters[bot.getRandomInt(characters.length)];
 
-    randChar2 = args[bot.getRandomInt(args.length)];
-    args.splice(args.indexOf(randChar2), 1);
-
-    message.channel.send(user1 + " gets " + randChar1);
-    message.channel.send(user2 + " gets " + randChar2);
+    await interaction.reply(
+        "<@" + user1.id + "> gets " + randChar1 + 
+        "\n<@" + user2.id + "> gets " + randChar2);
 }
 
 module.exports = {
-    name: "monthlypfp",
-    description: "randomizes monthly pfp",
-    execute,
+    data: new SlashCommandBuilder()
+        .setName("monthlypfp")
+        .setDescription("Randomizes monthly profile pictures (Owner Only)")
+        .addUserOption(option => option.setName("user1").setDescription("First User").setRequired(true))
+        .addUserOption(option => option.setName("user2").setDescription("Second User").setRequired(true))
+        .addStringOption(option => option.setName("characters").setDescription("List of characters").setRequired(true)),
+    execute
 }

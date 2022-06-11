@@ -1,9 +1,8 @@
-function execute(message, args) {
-    const bot = require('./../bot');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
 
-    let memberUsername = message.member.displayName;
-    let memberAvatar = message.author.displayAvatarURL();
-    let recallMessage = args.join(" ");
+async function execute(interaction) {
+    const bot = require('./../bot.js');
 
     const phrases = [
         // Yes statements
@@ -45,22 +44,24 @@ function execute(message, args) {
         "No! It's not an ecchi anime, how many times have I told you this? The story is god-tier so watch it"
     ];
 
-    const reply = new bot.Discord.MessageEmbed()
+    const reply = new MessageEmbed()
         .setColor("#" + bot.randomColor())
-        .setAuthor(memberUsername + " asks, \"" +  recallMessage + "\"", memberAvatar)
+        .setAuthor({ name: interaction.member.nickname + " asks, \"" + interaction.options.getString("input") + "\"", iconURL: interaction.member.displayAvatarURL() })
         .setTitle("RNGBall says...")
         .setDescription(phrases[bot.getRandomInt(phrases.length)]);
 
-    if (recallMessage.length == 0 || recallMessage.toLowerCase().startsWith("is anime good")) {
-        reply.setAuthor(memberUsername + " asks, \"Am I stupid?\"", memberAvatar);
-        reply.setDescription("Yes, very stupid");
+    if (interaction.options.getString("input").toLowerCase().includes("is anime good")) {
+        reply.setAuthor({ name: interaction.member.nickname + " asks, \"Am I stupid?\"", iconURL: interaction.member.displayAvatarURL() });
+        reply.setDescription("Yes");
     }
 
-    message.channel.send(reply);
+    interaction.reply({ embeds: [reply] });
 }
 
 module.exports = {
-    name: "rngball",
-    description: "8ball but better",
-    execute,
+    data: new SlashCommandBuilder()
+        .setName("rngball")
+        .setDescription("8Ball but better")
+        .addStringOption(option => option.setName("input").setDescription("Ask a question").setRequired(true)),
+    execute
 }

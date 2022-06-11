@@ -1,17 +1,16 @@
-function execute(message, args) {
-    if (args.length === 0) {
-        message.channel.send("Type something, stupid.");
-        return;
-    }
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
-    let repeatMessage = args.join(" ");
+async function execute(interaction) {
+    const bot = require("./../bot.js");
+    const repeatMessage = interaction.options.getString("input");
 
-    message.delete();
-    message.channel.send(repeatMessage);
+    bot.client.channels.cache.get(interaction.channelId).send(repeatMessage);
 }
 
 module.exports = {
-    name: "say",
-    description: "makes the bot say something",
-    execute,
+    data: new SlashCommandBuilder()
+        .setName("say")
+        .setDescription("Force bot to say something")
+        .addStringOption(option => option.setName("input").setDescription("Repeated Text").setRequired(true)),
+    execute
 }

@@ -1,5 +1,7 @@
-function execute(message) {
-    message.channel.send(
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+async function execute(interaction) {
+    await interaction.reply(        
         "I am the bone of my sword.\n" +
         "Steel is my body and fire is my blood.\n" +
         "I have created over a thousand blades.\n" +
@@ -10,8 +12,10 @@ function execute(message) {
         "So as I pray, Unlimited Blade Works"
     );
 }
+
 module.exports = {
-    name: "ubw",
-    description: "archer chant",
+    data: new SlashCommandBuilder()
+        .setName("ubw")
+        .setDescription("Get Archer chant from Fate/stay night"),
     execute
 }

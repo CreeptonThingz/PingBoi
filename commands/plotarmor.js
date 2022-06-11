@@ -1,18 +1,20 @@
-function execute(message) {
-    const bot = require("./../bot");
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+async function execute(interaction) {
+    const bot = require('./../bot.js');
 
     if (!bot.isDisabled) {
-        message.channel.send("HUH?! Did you __***SAY***__ something?!");
-    } else if (message.author.id == bot.ownerID) {
+        interaction.reply("HUH?! Did you __***SAY***__ something?!");
+    } else if (message.author.id === bot.ownerID) {
         bot.isDisabled = false;
-        message.channel.send("*Summons inpenetrable shield*");
-    } else if (message.author.id != bot.ownerID) {
-        message.channel.send("ERROR: User is too inexperienced to use this command.");
-    }
-}
+        interaction.reply("\*Summons inpenetrable shield\*");
+    } else if (message.author.id !== bot.ownerID) {
+        interaction.reply("ERROR: User is too inexperienced to use this command.");
+    }}
 
 module.exports = {
-    name: "plotarmor",
-    descrption: "enables the bot",
-    execute,
+    data: new SlashCommandBuilder()
+        .setName("plotarmor")
+        .setDescription("Enables the bot (Owner Only)"),
+    execute
 }

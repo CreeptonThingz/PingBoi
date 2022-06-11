@@ -1,27 +1,22 @@
-function execute(message, args) {
-    const bot = require('./../bot');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
-    if (args.length === 0) {
-        message.channel.send("Who's the idiot, you?");
-        return;
-    }
-
-    let idiot;
+async function execute(interaction) {
+    const bot = require('./../bot.js');
 
     switch (bot.getRandomInt(2)) {
-        case 0: 
-            idiot = message.author.id;
+        case 0:
+            await interaction.reply("<@" + interaction.user.id + "> is an idiot")
             break;
         case 1:
-            idiot = message.mentions.members.first();
+            await interaction.reply("<@" + interaction.options.getUser("user") + "> is an idiot")
             break;
     }
-
-    message.channel.send("<@" + idiot + "> is an idiot");
 }
 
 module.exports = {
-    name: "idiot",
-    description: "bully or get bullied",
-    execute,
+    data: new SlashCommandBuilder()
+        .setName("idiot")
+        .setDescription("Bully or get bullied")
+        .addUserOption(option => option.setName("user").setDescription("Target User").setRequired(true)),
+    execute
 }

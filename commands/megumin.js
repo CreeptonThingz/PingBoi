@@ -1,9 +1,11 @@
-function execute(message) {
-    const bot = require('./../bot');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+
+async function execute(interaction) {
+    const bot = require('./../bot.js');
 
     switch (bot.getRandomInt(3)) {
         case 0:
-            message.channel.send(
+            await interaction.reply(
                 "Darkness blacker than black and darker than dark,\n" +
                 "I beseech thee, combine with my deep crimson.\n" +
                 "The time of awakening cometh\n" +
@@ -17,7 +19,7 @@ function execute(message) {
             );
             break;
         case 1:
-            message.channel.send(
+            await interaction.reply(
                 "Oh, blackness shrouded in light,\n" +
                 "Frenzied blaze clad in night,\n" +
                 "In the name of the crimson demons,\n" +
@@ -28,7 +30,7 @@ function execute(message) {
             )
             break;
         case 2:
-            message.channel.send(
+            await interaction.reply(
                 "Crimson-black blaze, king of myriad worlds,\n" +
                 "though I promulgate the laws of nature,\n" +
                 "I am the alias of destruction incarnate\n" +
@@ -41,7 +43,8 @@ function execute(message) {
 }
 
 module.exports = {
-    name: "megumin",
-    description: "megumin chants",
-    execute,
+    data: new SlashCommandBuilder()
+        .setName("megumin")
+        .setDescription("Get Megumin chants from Konosuba"),
+    execute
 }

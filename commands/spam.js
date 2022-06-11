@@ -1,86 +1,78 @@
-let spamVictim = "";
-let spamStarter = "";
-let mentionMessage = ""
-let spamCount = 0;
-let spamPing;
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
-let currentSession = "";
+let spamVictim, spamStarter, mentionMessage, spamCount, spamPing, currentSession;
 
-function execute(message, args) {
-    const bot = require("./../bot");
-  
-    if (bot.isPinging) { 
-        message.channel.send("The transmutation circle is currently being used.");
-    } else {
-        spamVictim = message.mentions.members.first();
-        spamStarter = message.author;
-        mentionMessage = args.join(" ");
+async function execute(interaction) {
+    const bot = require('./../bot.js');
 
-        if (spamVictim == null) {
-            for (let i = 0; i < 5; i++) {
-                spamStarter.send("Spam who");
-            }
-            return;
-        }
+    if (bot.isPinging) {
+        await interaction.reply({ content: "The transmutation circle is currently being used.", emphemeral: true });
+        return;
+    }
 
-        spamVictim.send(mentionMessage)
-        .then(() => {
-            message.channel.send("Now pinging " + spamVictim.displayName);
+    spamVictim = interaction.options.getUser("target");
+    spamStarter = interaction.user.id;
+    mentionMessage = "<@" + spamStarter + "> " + (interaction.options.getString("message") !== null ? interaction.options.getString("message") : "");
+
+    await spamVictim.send(mentionMessage)
+        .then(async () => {
+            await interaction.member.guild.members.fetch(spamVictim.id).then((member) => { interaction.reply("Now pinging " + member.nickname); });
             bot.client.user.setActivity("bully simulator", { type: "PLAYING" });
-            
+
             module.exports.spamVictim = spamVictim;
             module.exports.spamStarter = spamStarter;
             module.exports.mentionMessage = mentionMessage;
             bot.isPinging = true;
-            
-            setSpamPing(bot);  
+
+            await setSpamPing(bot);
         })
         .catch(err => {
             console.error(err);
 
-            message.channel.send("I am unable to bully them.");
+            interaction.reply({ content: "I am unable to bully them", emphemeral: true });
             bot.client.user.setActivity(bot.defaultStatus, { type: "WATCHING" });
             bot.isPinging = false;
         });
-    }
 }
 
-function setSpamPing(bot) {     
+async function setSpamPing(bot) {
     spamCount = 1;
 
-    spamPing = setInterval(function() {
+    spamPing = await setInterval(() => {
         spamVictim.send(mentionMessage)
             .catch(err => {
                 console.error(err);
 
-                bot.client.users.cache.get(bot.ownerID).send("error: " + err)
+                bot.client.users.cache.get(bot.ownerID).send("error: " + err);
                 clearInterval(spamPing);
                 bot.isPinging = false;
             });
-      
+
         module.exports.spamCount = ++spamCount;
-
-        // Calculate time pinging
-        currentSession = "";
-      
-        let hours = Math.round(spamCount/1200);
-        let minutes = Math.round(spamCount/20 - hours*60);
-        let seconds = Math.round(spamCount*3 - minutes*60);
-    
-        if (hours != 0) { currentSession += hours.toString() + " hours, "; }
-        if (minutes != 0) { currentSession += minutes.toString() + " minutes, "; }
-        if (seconds != 0) { currentSession += seconds.toString() + " seconds "; }
-    
-        module.exports.currentSession = currentSession;
+        module.exports.currentSession = calculateSpamTime(spamCount);
     }, 3000);
+}
 
-    module.exports.spamPing = spamPing;
+function calculateSpamTime(pings) {
+    let time = "";
+
+    let hours = Math.floor(spamCount/1200);
+    let minutes = Math.floor(spamCount/20 - hours*60);
+    let seconds = Math.floor(spamCount*3 - minutes*60);
+
+    if (hours != 0) { currentSession += hours.toString() + " hours, "; }
+    if (minutes != 0) { currentSession += minutes.toString() + " minutes, "; }
+    if (seconds != 0) { currentSession += seconds.toString() + " seconds "; }
+
+    return time;
 }
 
 module.exports = {
-    name: "spam",
-    description: "bullies someone",
-    
+    data: new SlashCommandBuilder()
+        .setName("spam")
+        .setDescription("Bully someone")
+        .addUserOption(option => option.setName("target").setDescription("Set target user").setRequired(true))
+        .addStringOption(option => option.setName("message").setDescription("Set spam message")),
     execute,
     
     spamVictim,
@@ -89,5 +81,5 @@ module.exports = {
     spamCount,
     spamPing,
 
-    currentSession,
+    currentSession
 }

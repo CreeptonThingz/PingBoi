@@ -1,31 +1,19 @@
 {
-  "name": "pingboi",
+  "name": "pingboinew",
   "version": "1.0.0",
-  "description": "Discord Bot",
+  "description": "",
   "main": "bot.js",
   "scripts": {
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Creepton",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "@discordjs/builders": "^0.13.0",
     "@discordjs/rest": "^0.4.1",
-    "discord-api-types": "^0.33.0",
-    "discord.js": "^12.5.3",
-    "express": "^4.17.3",
-    "node-fetch": "^2.6.6"
-  },
-  "devDependencies": {
-    "node": "^16.14.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CreeptonThingz/PingBoi.git"
-  },
-  "keywords": [],
-  "bugs": {
-    "url": "https://github.com/CreeptonThingz/PingBoi/issues"
-  },
-  "homepage": "https://github.com/CreeptonThingz/PingBoi#readme"
+    "discord-api-types": "^0.33.1",
+    "discord.js": "^13.7.0",
+    "dotenv": "^16.0.1",
+    "google-search-results-nodejs": "^2.1.0"
+  }
 }
