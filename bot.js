@@ -22,6 +22,7 @@ for (const file of commandFiles) {
 // Client stuff
 client.once('ready', () => {
   	console.log('Ready!');
+    client.user.setActivity(defaultStatus, { type: "WATCHING" });
 });
 
 client.on('interactionCreate', async interaction => {
