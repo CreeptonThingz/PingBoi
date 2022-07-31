@@ -3,7 +3,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const keepAlive = require('./server.js');
 
 const ownerID = "162672579025436673";
-const defaultStatus = "AP scores coming back as 0";
+const defaultStatus = "Aidan being late again";
 
 let isDisabled = false;
 let isPinging = false;
@@ -75,7 +75,7 @@ module.exports = {
 	isDisabled
 }
 
-keepAlive();
+// keepAlive();
 
 client.login(process.env['TOKEN']);
 

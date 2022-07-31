@@ -12,16 +12,16 @@ for (const file of commandFiles) {
 	commands.push(command.data.toJSON());
 }
 
-const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
+const rest = new REST({ version: '10' }).setToken(process.env["TOKEN"]);
 
 (async () => {
 	try {
 		console.log('Started refreshing application (/) commands.');
 
-		await rest.put(Routes.applicationGuildCommands(clientID, guildID), { body: commands })
-
-		console.log('Successfully reloaded application (/) commands.');
-	} catch (error) {
+    await rest.put(Routes.applicationGuildCommands(clientID, guildID), { body: commands })
+      .then(() => console.log('Successfully registered application commands.'))
+      .catch(console.error);
+  } catch (error) {
 		console.error(error);
 	}
 })();

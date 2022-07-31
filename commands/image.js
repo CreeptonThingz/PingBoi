@@ -13,9 +13,10 @@ async function execute(interaction) {
         hl: "en",
         tbm: "isch"
     };
-    
-    search.json(params, (data) => 
-        interaction.reply(data["images_results"][bot.getRandomInt(data["images_results"].length)]["original"])
+
+    await interaction.deferReply();
+    await search.json(params, (data) => 
+        interaction.editReply(data["images_results"][bot.getRandomInt(data["images_results"].length)]["original"])
             .catch(err => {
                 console.error(err);
                 interaction.reply({ content: "Uh oh something broke", ephemeral: true });
