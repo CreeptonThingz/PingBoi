@@ -38,7 +38,7 @@ async function execute(interaction) {
 async function setSpamPing(bot) {
     spamCount = 1;
 
-    spamPing = await setInterval(() => {
+    module.exports.spamPing = await setInterval(() => {
         spamVictim.send(mentionMessage)
             .catch(err => {
                 console.error(err);
@@ -49,20 +49,20 @@ async function setSpamPing(bot) {
             });
 
         module.exports.spamCount = ++spamCount;
-        module.exports.currentSession = calculateSpamTime(spamCount);
+        module.exports.currentSession = calculateSpamTime();
     }, 3000);
 }
 
-function calculateSpamTime(pings) {
+function calculateSpamTime() {
     let time = "";
 
     let hours = Math.floor(spamCount/1200);
     let minutes = Math.floor(spamCount/20 - hours*60);
     let seconds = Math.floor(spamCount*3 - minutes*60);
 
-    if (hours != 0) { currentSession += hours.toString() + " hours, "; }
-    if (minutes != 0) { currentSession += minutes.toString() + " minutes, "; }
-    if (seconds != 0) { currentSession += seconds.toString() + " seconds "; }
+    if (hours != 0) { time += hours.toString() + " hours, "; }
+    if (minutes != 0) { time += minutes.toString() + " minutes, "; }
+    if (seconds != 0) { time += seconds.toString() + " seconds "; }
 
     return time;
 }

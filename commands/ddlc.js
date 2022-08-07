@@ -1,21 +1,9 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord.js');
 
 async function execute(interaction) {
-    const bot = require("../bot.js");
     const apiUrl = "https://api-inference.huggingface.co/models/Creepton/DDLCYuri-DialoGPT-small"
     const fetch = require("node-fetch")
-  
-    // switch (interaction.options.getSubcommand()) {
-    //     case "start":
-    //         interaction.reply("Starting")
-    //         break;
-    //     case "stop":
-    //         interaction.reply("Stopping")
-    //         break;
-    //     case "chat":
-    //         interaction.reply("Bruh")
-    //         break;
-    // }
 
     const payload = {
         inputs: {
@@ -44,7 +32,12 @@ async function execute(interaction) {
         botResponse = data.error;
     }
 
-    interaction.editReply(botResponse);
+    let reply = new MessageEmbed()
+        .setColor("#34003d")
+        .setAuthor({ name: "\"" + interaction.options.getString("input") + "\"", iconURL: interaction.member.displayAvatarURL() })
+        .setDescription(botResponse);
+
+    interaction.editReply({ embeds: [reply] });
 }
 
 module.exports = {
@@ -52,22 +45,5 @@ module.exports = {
         .setName("ddlc")
         .setDescription("DDLC Yuri Chatbot")
         .addStringOption(option => option.setName("input").setDescription("Send message to chatbot").setRequired(true)),
-        // .addSubcommand(subcommand => 
-        //     subcommand
-        //         .setName("start")
-        //         .setDescription("Starts up chatbot model"))
-        // .addSubcommand(subcommand => 
-        //     subcommand
-        //         .setName("stop")
-        //         .setDescription("Stops chatbot model"))
-        // .addSubcommand(subcommand => 
-        //     subcommand
-        //         .setName("chat")
-        //         .setDescription("Talk with chatbot")
-        //         .addStringOption(option => 
-        //             option
-        //                 .setName("input")
-        //                 .setDescription("Send message")
-        //                 .setRequired(true))),
     execute
 }

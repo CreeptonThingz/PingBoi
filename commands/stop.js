@@ -9,7 +9,7 @@ async function execute(interaction) {
     if (!bot.isPinging) {
         interaction.reply({ content: "What ever do you mean \"stop\"?", ephemeral: true });
         return;
-    } else if (messageAuthor !== spam.spamVictim.id || messageAuthor !== bot.ownerID || messageAuthor !== spam.spamStarter.id) {
+    } else if (messageAuthor != spam.spamVictim || messageAuthor != bot.ownerID || messageAuthor != spam.spamStarter) {
         interaction.reply({ content: "This does not convern you, go along now", ephemeral: true });
         return;
     }
@@ -17,7 +17,7 @@ async function execute(interaction) {
     interaction.reply("https://i.redd.it/7rtkq25zvj751.jpg");
     interaction.member.guild.members.fetch(spam.spamVictim.id).then((member) => { 
         bot.client.channels.cache.get(interaction.channelId).send(
-            member.nickname + " was pinged " + spam.spamCount + 
+            member.nickname + " was pinged " + spam.spamCount + " times" + 
             "\nPinged for " + spam.currentSession);
     });
     clearInterval(spam.spamPing);

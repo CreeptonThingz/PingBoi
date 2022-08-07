@@ -75,7 +75,7 @@ module.exports = {
 	isDisabled
 }
 
-// keepAlive();
+keepAlive();
 
 client.login(process.env['TOKEN']);
 
