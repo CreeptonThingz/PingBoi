@@ -58,7 +58,7 @@ function calculateSpamTime() {
 
     let hours = Math.floor(spamCount/1200);
     let minutes = Math.floor(spamCount/20 - hours*60);
-    let seconds = Math.floor(spamCount*3 - minutes*60);
+    let seconds = Math.floor(spamCount*3 - minutes*60 - hours*3600);
 
     if (hours != 0) { time += hours.toString() + " hours, "; }
     if (minutes != 0) { time += minutes.toString() + " minutes, "; }
