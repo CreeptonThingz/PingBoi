@@ -9,8 +9,8 @@ async function execute(interaction) {
     if (!bot.isPinging) {
         interaction.reply({ content: "What ever do you mean \"stop\"?", ephemeral: true });
         return;
-    } else if (messageAuthor != spam.spamVictim || messageAuthor != bot.ownerID || messageAuthor != spam.spamStarter) {
-        interaction.reply({ content: "This does not convern you, go along now", ephemeral: true });
+    } else if (messageAuthor != spam.spamVictim.id || messageAuthor != bot.ownerID || messageAuthor != spam.spamStarter) {
+        interaction.reply({ content: "This does not concern you, go along now", ephemeral: true });
         return;
     }
 
@@ -28,6 +28,6 @@ async function execute(interaction) {
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("stop")
-        .setDescription("Stop bullynig"),
+        .setDescription("Stop bullying"),
     execute
 }
