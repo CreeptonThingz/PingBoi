@@ -11,15 +11,6 @@ async function execute(interaction) {
         if (interaction.options.getString("input") != null) {
             mentionMessage += interaction.options.getString("input");
         }
-        
-        // Error Check (uneeded?)
-        
-        // if (interaction.options.getUser("user").id == null) {
-        //     for (let i = 0; i < 3; i++) {
-        //         await interaction.reply({content: "Spam who", ephemeral: true });
-        //     }    
-        //     return;
-        // }
       
         for (let i = 0; i < 3; i++) {
             bot.client.channels.cache.get(interaction.channelId).send(mentionMessage);
