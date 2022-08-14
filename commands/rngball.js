@@ -17,6 +17,7 @@ async function execute(interaction) {
         "Yellow \nEmeralds \nSuck",
         ":thumbsup:",
         "Obviously",
+        "Indeed",
 
         // No statements
         "No",
@@ -29,10 +30,11 @@ async function execute(interaction) {
         "Negative \nOperation",
         ":thumbsdown:",
         "Denied",
+        "Nah",
 
         // Other statements
         "Uhm...",
-        "Hah, hah, did you say something? No? Okay",
+        "Hah, hah, did you say something?",
         "Sorry, too busy snorting crushed up anime figures",
         "I don't know man. But your waifu kinda trash ngl",
         "How about you **DON'T** ask me a pointless question",
@@ -41,7 +43,8 @@ async function execute(interaction) {
         "Look! Squirrel! *Runs away*",
         "It is but in my greatest knowledge that I must beseech you upon my answer that currently stands unknown",
         "Did you know that the age of consent is 18 years old?",
-        "No! It's not an ecchi anime, how many times have I told you this? The story is god-tier so watch it"
+        "No! It's not an ecchi anime, how many times have I told you this? The story is god-tier so watch it",
+        "Bruh"
     ];
 
     const reply = new MessageEmbed()
