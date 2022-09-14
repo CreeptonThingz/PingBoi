@@ -3,7 +3,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 const keepAlive = require('./server.js');
 
 const ownerID = "162672579025436673";
-const defaultStatus = "Aidan being late again";
+const defaultStatus = "the world end on April 24, 2023 at 10:47:28 AM";
 
 let isDisabled = false;
 let isPinging = false;
@@ -77,4 +77,3 @@ module.exports = {
 keepAlive();
 
 client.login(process.env['TOKEN']);
-
