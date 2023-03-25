@@ -27,11 +27,11 @@ client.once('ready', () => {
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
-    const command = client.commands.get(interaction.commandName);
+  const command = client.commands.get(interaction.commandName);
 
-    if (!command) return;
+  if (!command) return;
 
-    try {
+  try {
 		await command.execute(interaction);
 	} catch (error) {
 		console.error(error);
@@ -40,6 +40,8 @@ client.on('interactionCreate', async interaction => {
 });
 
 
+
+// Helper functions
 // Minimum inclusive, Maximum exclusive
 function getRandomIntMin(min, max) {
     min = Math.ceil(min);
@@ -75,5 +77,4 @@ module.exports = {
 }
 
 keepAlive();
-
 client.login(process.env['TOKEN']);
