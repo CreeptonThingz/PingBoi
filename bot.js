@@ -1,80 +1,90 @@
-const { Client, Intents, Collection } = require('discord.js');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
-const keepAlive = require('./server.js');
+// Require necessary command handling modules 
+const fs = require("node:fs");
+const path = require("node:path");
 
-const ownerID = "162672579025436673";
-const defaultStatus = "the world end on April 24, 2023 at 10:47:28 AM";
+// Require necessary discord.js classes
+const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
 
-let isDisabled = false;
-let isPinging = false;
+// Require token
+const { TOKEN } = require("./config.json");
 
-// Filescan
-const fs = require('fs');
+// Create a new client instance
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
+// const ownerID = "162672579025436673";
+// const defaultStatus = "the world end on April 24, 2023 at 10:47:28 AM";
+
+// let isDisabled = false;
+// let isPinging = false;
+
+// Load commands
 client.commands = new Collection();
-const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith('.js'));
+const commandsPath = path.join(__dirname, "commands");
+const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-  	const command = require(`./commands/${file}`);
-  	client.commands.set(command.data.name, command);
-}
+	const filePath = path.join(commandsPath, file);
+  	const command = require(filePath);
 
-// Client stuff
-client.once('ready', () => {
-  	console.log('Ready!');
-    client.user.setActivity(defaultStatus, { type: "WATCHING" });
-});
-
-client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
-
-  const command = client.commands.get(interaction.commandName);
-
-  if (!command) return;
-
-  try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	if ("data" in command && "execute" in command) {
+		client.commands.set(command.data.name, command);
+	} else {
+		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
 	}
-});
+}
+
+// Read event files
+const eventsPath = path.join(__dirname, "events");
+const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'));
+
+for (const file of eventFiles) {
+	const filePath = path.join(eventsPath, file);
+	const event = require(filePath);
+
+	if (event.once) {
+		client.once(event.name, (...args) => event.execute(...args));
+	} else {
+		client.on(event.name, (...args) => event.execute(...args));
+	}
+}
 
 
-
+// 
 // Helper functions
+//
+
 // Minimum inclusive, Maximum exclusive
-function getRandomIntMin(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
-}
+// function getRandomIntMin(min, max) {
+//     min = Math.ceil(min);
+//     max = Math.floor(max);
+//     return Math.floor(Math.random() * (max - min) + min);
+// }
 
-// Minimum (0) inclusive, Maximum exclusive
-function getRandomInt(max) {
-    max = Math.floor(max);
-    return Math.floor(Math.random() * max);
-}
+// // Minimum (0) inclusive, Maximum exclusive
+// function getRandomInt(max) {
+//     max = Math.floor(max);
+//     return Math.floor(Math.random() * max);
+// }
 
-// Outputs random hex color code
-function randomColor() {
-    return Math.floor(Math.random()*16777215).toString(16);
-}
+// // Outputs random hex color code
+// function randomColor() {
+//     return Math.floor(Math.random()*16777215).toString(16);
+// }
 
-module.exports = {
-	// Functions
-	getRandomInt,
-	getRandomIntMin,
-	randomColor,
+// module.exports = {
+// 	// Functions
+// 	getRandomInt,
+// 	getRandomIntMin,
+// 	randomColor,
 
-	// Constants
-	ownerID,
-	client,
-	defaultStatus,
+// 	// Constants
+// 	ownerID,
+// 	client,
+// 	defaultStatus,
 
-	// Variables
-	isPinging,
-	isDisabled
-}
+// 	// Variables
+// 	isPinging,
+// 	isDisabled
+// }
 
-keepAlive();
-client.login(process.env['TOKEN']);
+client.login(TOKEN);
