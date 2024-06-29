@@ -1,9 +1,5 @@
-.config
 config.json
-.git
-.upm
-.replit
-replit.nix
 node_modules
 package-lock.json
 package.json
+.env
