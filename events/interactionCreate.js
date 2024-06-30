@@ -7,8 +7,6 @@ const execute = async (interaction) => {
     // Return if interaction is not a slash command
     if (!interaction.isChatInputCommand()) return;
 
-    console.log(interaction.client);
-
     // Get details of command
     const command = interaction.client.commands.get(interaction.commandName);
 
@@ -20,8 +18,6 @@ const execute = async (interaction) => {
 
     // Check cooldowns
     const { cooldowns } = interaction.client;
-
-    console.log(interaction);
 
     if (!cooldowns.has(command.data.name)) {
         cooldowns.set(command.data.name, new Collection());
