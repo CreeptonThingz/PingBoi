@@ -1,34 +1,26 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 
-let cooldown;
+const data = new SlashCommandBuilder()
+    .setName("burstspam")
+    .setDescription("Ping in a burst")
+    .addUserOption(option => option.setName("user").setDescription("Target User").setRequired(true))
+    .addStringOption(option => option.setName("input").setDescription("Add a message"));
 
-async function execute(interaction) {
-    const bot = require("../bot.js");
+const execute = async (interaction) => {
+    const mentionMessage = "<@" + interaction.options.getUser("user").id + "> ";
 
-    if (cooldown == null) {
-        const mentionMessage = "<@" + interaction.options.getUser("user").id + "> ";
-
-        if (interaction.options.getString("input") != null) {
-            mentionMessage += interaction.options.getString("input");
-        }
-      
-        for (let i = 0; i < 3; i++) {
-            bot.client.channels.cache.get(interaction.channelId).send(mentionMessage);
-        }
-
-        cooldown = setTimeout(() => {
-            cooldown = null;
-        }, 5*1000);
-    } else {
-        message.channel.say("Command in cooldown, stop spamming");
+    if (interaction.options.getString("input")) {
+        mentionMessage += interaction.options.getString("input");
     }
+    
+    // Burst of three
+    interaction.reply(mentionMessage);
+    interaction.reply(mentionMessage);
+    interaction.reply(mentionMessage);    
 }
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("burstspam")
-        .setDescription("Ping in a burst")
-        .addUserOption(option => option.setName("user").setDescription("Target User").setRequired(true))
-        .addStringOption(option => option.setName("input").setDescription("Add a message")),
+    cooldown: 5,
+    data,
     execute
 }
