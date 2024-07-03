@@ -1,5 +1,8 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, MessageEmbed } = require("discord.js");
+
+const data = new SlashCommandBuilder()
+    .setName("help")
+    .setDescription("Get help page");
 
 async function execute(interaction) {    
     const commandList = new MessageEmbed()
@@ -44,8 +47,6 @@ async function execute(interaction) {
 }
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("help")
-        .setDescription("Get help page"),
-    execute,
-}
+    data,
+    execute
+};

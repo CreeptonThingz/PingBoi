@@ -1,7 +1,23 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require("discord.js");
+
+const data = new SlashCommandBuilder()
+    .setName("monthlypfp")
+    .setDescription("Randomizes monthly profile pictures (Owner Only)")
+    .addUserOption(option => option
+        .setName("user1")
+        .setDescription("First User")
+        .setRequired(true))
+    .addUserOption(option => option
+        .setName("user2")
+        .setDescription("Second User")
+        .setRequired(true))
+    .addStringOption(option => option
+        .setName("characters")
+        .setDescription("List of characters")
+        .setRequired(true));
 
 async function execute(interaction) {
-    const bot = require('./../bot.js');
+    const bot = require("./../bot.js");
 
     if (interaction.user.id !== bot.ownerID) {
         interaction.reply({ content: "One must have knowledge of all past selves before gaining the authority of this command (Ur dumb lmoa)", ephemeral: true });
@@ -22,11 +38,6 @@ async function execute(interaction) {
 }
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("monthlypfp")
-        .setDescription("Randomizes monthly profile pictures (Owner Only)")
-        .addUserOption(option => option.setName("user1").setDescription("First User").setRequired(true))
-        .addUserOption(option => option.setName("user2").setDescription("Second User").setRequired(true))
-        .addStringOption(option => option.setName("characters").setDescription("List of characters").setRequired(true)),
+    data,
     execute
-}
+};

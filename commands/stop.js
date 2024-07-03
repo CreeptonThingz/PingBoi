@@ -1,8 +1,12 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require("discord.js");
+
+const data = new SlashCommandBuilder()
+    .setName("stop")
+    .setDescription("Stop bullying");
 
 async function execute(interaction) {
-    const bot = require('./../bot.js');
-    const spam = require('./spam.js');
+    const bot = require("./../bot.js");
+    const spam = require("./spam.js");
 
     let messageAuthor = interaction.user.id;
 
@@ -26,8 +30,6 @@ async function execute(interaction) {
 }
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("stop")
-        .setDescription("Stop bullying"),
+    data,
     execute
-}
+};

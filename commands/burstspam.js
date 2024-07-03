@@ -1,26 +1,34 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require("discord.js");
 
 const data = new SlashCommandBuilder()
     .setName("burstspam")
     .setDescription("Ping in a burst")
-    .addUserOption(option => option.setName("user").setDescription("Target User").setRequired(true))
-    .addStringOption(option => option.setName("input").setDescription("Add a message"));
+    .addUserOption(option => option
+        .setName("user")
+        .setDescription("Target User")
+        .setRequired(true))
+    .addStringOption(option => option
+        .setName("input")
+        .setDescription("Add a message"));
 
-const execute = async (interaction) => {
-    const mentionMessage = "<@" + interaction.options.getUser("user").id + "> ";
-
-    if (interaction.options.getString("input")) {
-        mentionMessage += interaction.options.getString("input");
-    }
+async function execute(interaction) {
+    const targetUser = interaction.options.get("user")
+    const inputMessage = interaction.options.get("input") || "";
+    const mentionMessage = `<@${targetUser.id}> ${inputMessage}`.trim();
     
-    // Burst of three
-    interaction.reply(mentionMessage);
-    interaction.reply(mentionMessage);
-    interaction.reply(mentionMessage);    
+    try {
+        // Burst of three
+        interaction.reply(mentionMessage);
+        interaction.followUp(mentionMessage);
+        interaction.followUp(mentionMessage);  
+    } catch (error) {
+        console.error("Error sending burst messages:", error);
+        await interaction.reply({ content: "An error occurred while sending the messages.", ephemeral: true });
+    }
 }
 
 module.exports = {
     cooldown: 5,
     data,
     execute
-}
+};

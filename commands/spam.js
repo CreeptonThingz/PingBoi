@@ -1,9 +1,20 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require("discord.js");
 
 let spamVictim, spamStarter, mentionMessage, spamCount, spamPing, currentSession;
 
-async function execute(interaction) {
-    const bot = require('./../bot.js');
+const data = new SlashCommandBuilder()
+    .setName("spam")
+    .setDescription("Bully someone")
+    .addUserOption(option => option
+        .setName("target")
+        .setDescription("Set target user")
+        .setRequired(true))
+    .addStringOption(option => option
+        .setName("message")
+        .setDescription("Set spam message"));
+
+async function execute (interaction) {
+    const bot = require("./../bot.js");
 
     if (bot.isPinging) {
         await interaction.reply({ content: "The transmutation circle is currently being used.", emphemeral: true });
@@ -68,11 +79,7 @@ function calculateSpamTime() {
 }
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("spam")
-        .setDescription("Bully someone")
-        .addUserOption(option => option.setName("target").setDescription("Set target user").setRequired(true))
-        .addStringOption(option => option.setName("message").setDescription("Set spam message")),
+    data,
     execute,
     
     spamVictim,
@@ -82,4 +89,4 @@ module.exports = {
     spamPing,
 
     currentSession
-}
+};

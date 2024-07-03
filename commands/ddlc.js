@@ -1,5 +1,12 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, MessageEmbed } = require("discord.js");
+
+const data = new SlashCommandBuilder()
+    .setName("ddlc")
+    .setDescription("DDLC Yuri Chatbot")
+    .addStringOption(option => option
+        .setName("input")
+        .setDescription("Send message to chatbot")
+        .setRequired(true));
 
 async function execute(interaction) {
     const apiUrl = "https://api-inference.huggingface.co/models/Creepton/DDLCYuri-DialoGPT-small"
@@ -41,9 +48,6 @@ async function execute(interaction) {
 }
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("ddlc")
-        .setDescription("DDLC Yuri Chatbot")
-        .addStringOption(option => option.setName("input").setDescription("Send message to chatbot").setRequired(true)),
+    data,
     execute
-}
+};

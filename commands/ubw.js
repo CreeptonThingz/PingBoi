@@ -1,4 +1,8 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require("discord.js");
+
+const data = new SlashCommandBuilder()
+    .setName("ubw")
+    .setDescription("Get Archer chant from Fate/stay night");
 
 async function execute(interaction) {
     await interaction.reply(        
@@ -14,8 +18,6 @@ async function execute(interaction) {
 }
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("ubw")
-        .setDescription("Get Archer chant from Fate/stay night"),
+    data,
     execute
-}
+};

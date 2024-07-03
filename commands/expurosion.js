@@ -1,7 +1,11 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require("discord.js");
+
+const data = new SlashCommandBuilder()
+    .setName("expurosion")
+    .setDescription("Disables bot (Owner Only)");
 
 async function execute(interaction) {
-    const bot = require('./../bot.js');
+    const bot = require("./../bot.js");
 
     if (bot.isDisabled) {
         interaction.reply(
@@ -17,8 +21,6 @@ async function execute(interaction) {
 }
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("expurosion")
-        .setDescription("Disables bot (Owner Only)"),
+    data,
     execute
-}
+};

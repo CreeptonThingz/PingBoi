@@ -1,7 +1,11 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require("discord.js");
+
+const data = new SlashCommandBuilder()
+    .setName("megumin")
+    .setDescription("Get Megumin chants from Konosuba");
 
 async function execute(interaction) {
-    const bot = require('./../bot.js');
+    const bot = require("./../bot.js");
 
     switch (bot.getRandomInt(3)) {
         case 0:
@@ -43,8 +47,6 @@ async function execute(interaction) {
 }
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("megumin")
-        .setDescription("Get Megumin chants from Konosuba"),
+    data,
     execute
-}
+};

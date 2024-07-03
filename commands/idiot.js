@@ -1,7 +1,15 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require("discord.js");
+
+const data = new SlashCommandBuilder()
+    .setName("idiot")
+    .setDescription("Bully or get bullied")
+    .addUserOption(option => option
+        .setName("user")
+        .setDescription("Target User")
+        .setRequired(true));
 
 async function execute(interaction) {
-    const bot = require('./../bot.js');
+    const bot = require("./../bot.js");
 
     switch (bot.getRandomInt(2)) {
         case 0:
@@ -14,9 +22,6 @@ async function execute(interaction) {
 }
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("idiot")
-        .setDescription("Bully or get bullied")
-        .addUserOption(option => option.setName("user").setDescription("Target User").setRequired(true)),
+    data,
     execute
-}
+};

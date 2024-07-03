@@ -1,8 +1,15 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder, MessageEmbed } = require("discord.js");
+
+const data = new SlashCommandBuilder()
+    .setName("rngball")
+    .setDescription("8Ball but better")
+    .addStringOption(option => option
+        .setName("input")
+        .setDescription("Ask a question")
+        .setRequired(true));
 
 async function execute(interaction) {
-    const bot = require('./../bot.js');
+    const bot = require("./../bot.js");
 
     const phrases = [
         // Yes statements
@@ -62,9 +69,6 @@ async function execute(interaction) {
 }
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        .setName("rngball")
-        .setDescription("8Ball but better")
-        .addStringOption(option => option.setName("input").setDescription("Ask a question").setRequired(true)),
+    data,
     execute
-}
+};
