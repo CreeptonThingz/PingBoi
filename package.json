@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "discord.js": "^14.15.3",
+    "google-search-results-nodejs": "^2.1.0",
     "wrangler": "^3.62.0"
   },
   "devDependencies": {
