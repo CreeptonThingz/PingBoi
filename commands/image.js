@@ -1,38 +1,38 @@
 const { SlashCommandBuilder } = require("discord.js");
 
 const data = new SlashCommandBuilder()
-    .setName("image")
-    .setDescription("Search for image")
-    .addStringOption(option => option
-        .setName("query")
-        .setDescription("Input Search Query")
-        .setRequired(true));
+	.setName("image")
+	.setDescription("Search for image")
+	.addStringOption(option => option
+		.setName("query")
+		.setDescription("Input Search Query")
+		.setRequired(true));
 
 async function execute(interaction) {
-    const bot = require("./../bot.js");
-    const SerpApi = require("google-search-results-nodejs");
-    const search = new SerpApi.GoogleSearch("44a20c71539654ff8e754c35d6326bf23fe34652c5f9468d9a8d752ec7609112");
-    
-    const params = {
-        engine: "google",
-        q: interaction.options.getString("query").split(" ").join("+"),
-        google_domain: "google.com",
-        gl: "us",
-        hl: "en",
-        tbm: "isch"
-    };
+	const bot = require("./../bot.js");
+	const SerpApi = require("google-search-results-nodejs");
+	const search = new SerpApi.GoogleSearch("44a20c71539654ff8e754c35d6326bf23fe34652c5f9468d9a8d752ec7609112");
 
-    await interaction.deferReply();
-    await search.json(params, (data) => 
-        interaction.editReply(data["images_results"][bot.getRandomInt(data["images_results"].length)]["original"])
-            .catch(err => {
-                console.error(err);
-                interaction.reply({ content: "Uh oh something broke", ephemeral: true });
-            })
-    );
+	const params = {
+		engine: "google",
+		q: interaction.options.getString("query").split(" ").join("+"),
+		google_domain: "google.com",
+		gl: "us",
+		hl: "en",
+		tbm: "isch",
+	};
+
+	await interaction.deferReply();
+	await search.json(params, (resultsData) =>
+		interaction.editReply(resultsData["images_results"][bot.getRandomInt(data["images_results"].length)]["original"])
+			.catch(err => {
+				console.error(err);
+				interaction.reply({ content: "Uh oh something broke", ephemeral: true });
+			}),
+	);
 }
 
 module.exports = {
-    data,
-    execute
+	data,
+	execute,
 };
