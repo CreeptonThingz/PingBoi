@@ -1,5 +1,5 @@
 // Handle slash commands when received an interaction
-const { Events } = require("discord.js");
+const { Collection, Events } = require("discord.js");
 
 const name = Events.InteractionCreate;
 
@@ -38,6 +38,10 @@ const execute = async (interaction) => {
         }
     }
 
+    // Set cooldown for user
+    timestamps.set(interaction.user.id, now);
+    setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
+
     // Execute command
     try {
         await command.execute(interaction);
@@ -49,10 +53,6 @@ const execute = async (interaction) => {
             await interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
         }
     }
-
-    // Set cooldown for user
-    timestamps.set(interaction.user.id, now);
-    setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
 }
 
 module.exports = {

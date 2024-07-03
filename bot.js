@@ -3,7 +3,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 // Require necessary discord.js classes
-const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
+const { Client, Collection, GatewayIntentBits } = require("discord.js");
 
 // Require token
 const { TOKEN } = require("./config.json");
@@ -16,6 +16,9 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 // let isDisabled = false;
 // let isPinging = false;
+
+// Enable cooldowns
+client.cooldowns = new Collection();
 
 // Load commands
 client.commands = new Collection();
@@ -47,6 +50,7 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
+
 
 
 // 
