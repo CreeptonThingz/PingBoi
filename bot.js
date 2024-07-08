@@ -11,9 +11,6 @@ const { TOKEN } = require("./config.json");
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-// const ownerID = "162672579025436673";
-// const defaultStatus = "the world end on April 24, 2023 at 10:47:28 AM";
-
 // let isDisabled = false;
 // let isPinging = false;
 
@@ -57,42 +54,14 @@ for (const file of eventFiles) {
 	}
 }
 
-//
-// Helper functions
-//
-
-// Minimum inclusive, Maximum exclusive
-// function getRandomIntMin(min, max) {
-//     min = Math.ceil(min);
-//     max = Math.floor(max);
-//     return Math.floor(Math.random() * (max - min) + min);
-// }
-
-// // Minimum (0) inclusive, Maximum exclusive
-// function getRandomInt(max) {
-//     max = Math.floor(max);
-//     return Math.floor(Math.random() * max);
-// }
-
-// // Outputs random hex color code
-// function randomColor() {
-//     return Math.floor(Math.random()*16777215).toString(16);
-// }
-
-// module.exports = {
-// 	// Functions
-// 	getRandomInt,
-// 	getRandomIntMin,
-// 	randomColor,
-
-// 	// Constants
-// 	ownerID,
-// 	client,
-// 	defaultStatus,
-
-// 	// Variables
-// 	isPinging,
-// 	isDisabled
-// }
+module.exports = {
+	// // Constants
+	// ownerID,
+	// client,
+	// defaultStatus,
+	// // Variables
+	// isPinging,
+	// isDisabled
+};
 
 client.login(TOKEN);
