@@ -2,3 +2,5 @@ config.json
 node_modules
 .env
 eslint.config.mjs
+.prettierrc
+.prettierignore
