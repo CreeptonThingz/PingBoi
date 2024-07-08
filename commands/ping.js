@@ -5,7 +5,9 @@ const data = new SlashCommandBuilder()
 	.setDescription("Check bot latency");
 
 async function execute(interaction) {
-	await interaction.reply(`🏓API Latency is ${Math.round(interaction.client.ws.ping)}ms`);
+	await interaction.reply(
+		`🏓API Latency is ${Math.round(interaction.client.ws.ping)}ms`
+	);
 }
 
 module.exports = {

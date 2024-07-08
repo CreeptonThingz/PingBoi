@@ -3,13 +3,16 @@ const { SlashCommandBuilder, MessageEmbed } = require("discord.js");
 const data = new SlashCommandBuilder()
 	.setName("ddlc")
 	.setDescription("DDLC Yuri Chatbot")
-	.addStringOption(option => option
-		.setName("input")
-		.setDescription("Send message to chatbot")
-		.setRequired(true));
+	.addStringOption((option) =>
+		option
+			.setName("input")
+			.setDescription("Send message to chatbot")
+			.setRequired(true)
+	);
 
 async function execute(interaction) {
-	const apiUrl = "https://api-inference.huggingface.co/models/Creepton/DDLCYuri-DialoGPT-small";
+	const apiUrl =
+		"https://api-inference.huggingface.co/models/Creepton/DDLCYuri-DialoGPT-small";
 	const fetch = require("node-fetch");
 
 	const payload = {
@@ -19,7 +22,7 @@ async function execute(interaction) {
 	};
 
 	const headers = {
-		"Authorization": "Bearer " + process.env.YuriChatbotToken,
+		Authorization: "Bearer " + process.env.YuriChatbotToken,
 	};
 
 	await interaction.deferReply();
@@ -41,7 +44,11 @@ async function execute(interaction) {
 
 	const reply = new MessageEmbed()
 		.setColor("#34003d")
-		.setAuthor({ name: "\"" + interaction.options.getString("input") + "\"", iconURL: interaction.member.displayAvatarURL() })
+		.setAuthor({
+			// prettier-ignore
+			name: "\"" + interaction.options.getString("input") + "\"",
+			iconURL: interaction.member.displayAvatarURL(),
+		})
 		.setDescription(botResponse);
 
 	interaction.editReply({ embeds: [reply] });

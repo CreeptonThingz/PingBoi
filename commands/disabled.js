@@ -7,7 +7,11 @@ const data = new SlashCommandBuilder()
 async function execute(interaction) {
 	const bot = require("./../bot.js");
 
-	await interaction.reply(bot.isDisabled ? "PingBoi is currently disabled" : "PingBoi is currently enabled");
+	await interaction.reply(
+		bot.isDisabled
+			? "PingBoi is currently disabled"
+			: "PingBoi is currently enabled"
+	);
 }
 
 module.exports = {

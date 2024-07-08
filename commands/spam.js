@@ -1,33 +1,54 @@
 const { SlashCommandBuilder } = require("discord.js");
 
-let spamVictim, spamStarter, mentionMessage, spamCount, spamPing, currentSession;
+let spamVictim,
+	spamStarter,
+	mentionMessage,
+	spamCount,
+	spamPing,
+	currentSession;
 
 const data = new SlashCommandBuilder()
 	.setName("spam")
 	.setDescription("Bully someone")
-	.addUserOption(option => option
-		.setName("target")
-		.setDescription("Set target user")
-		.setRequired(true))
-	.addStringOption(option => option
-		.setName("message")
-		.setDescription("Set spam message"));
+	.addUserOption((option) =>
+		option
+			.setName("target")
+			.setDescription("Set target user")
+			.setRequired(true)
+	)
+	.addStringOption((option) =>
+		option.setName("message").setDescription("Set spam message")
+	);
 
 async function execute(interaction) {
 	const bot = require("./../bot.js");
 
 	if (bot.isPinging) {
-		await interaction.reply({ content: "The transmutation circle is currently being used.", emphemeral: true });
+		await interaction.reply({
+			content: "The transmutation circle is currently being used.",
+			emphemeral: true,
+		});
 		return;
 	}
 
 	spamVictim = interaction.options.getUser("target");
 	spamStarter = interaction.user.id;
-	mentionMessage = "<@" + spamStarter + "> " + (interaction.options.getString("message") !== null ? interaction.options.getString("message") : "");
+	mentionMessage =
+		"<@" +
+		spamStarter +
+		"> " +
+		(interaction.options.getString("message") !== null
+			? interaction.options.getString("message")
+			: "");
 
-	await spamVictim.send(mentionMessage)
+	await spamVictim
+		.send(mentionMessage)
 		.then(async () => {
-			await interaction.member.guild.members.fetch(spamVictim.id).then((member) => { interaction.reply("Now pinging " + member.nickname); });
+			await interaction.member.guild.members
+				.fetch(spamVictim.id)
+				.then((member) => {
+					interaction.reply("Now pinging " + member.nickname);
+				});
 			bot.client.user.setActivity("bully simulator", { type: "PLAYING" });
 
 			module.exports.spamVictim = spamVictim;
@@ -37,11 +58,16 @@ async function execute(interaction) {
 
 			await setSpamPing(bot);
 		})
-		.catch(err => {
+		.catch((err) => {
 			console.error(err);
 
-			interaction.reply({ content: "I am unable to bully them", emphemeral: true });
-			bot.client.user.setActivity(bot.defaultStatus, { type: "WATCHING" });
+			interaction.reply({
+				content: "I am unable to bully them",
+				emphemeral: true,
+			});
+			bot.client.user.setActivity(bot.defaultStatus, {
+				type: "WATCHING",
+			});
 			bot.isPinging = false;
 		});
 }
@@ -50,14 +76,13 @@ async function setSpamPing(bot) {
 	spamCount = 1;
 
 	module.exports.spamPing = await setInterval(() => {
-		spamVictim.send(mentionMessage)
-			.catch(err => {
-				console.error(err);
+		spamVictim.send(mentionMessage).catch((err) => {
+			console.error(err);
 
-				bot.client.users.cache.get(bot.ownerID).send("error: " + err);
-				clearInterval(spamPing);
-				bot.isPinging = false;
-			});
+			bot.client.users.cache.get(bot.ownerID).send("error: " + err);
+			clearInterval(spamPing);
+			bot.isPinging = false;
+		});
 
 		module.exports.spamCount = ++spamCount;
 		module.exports.currentSession = calculateSpamTime();
@@ -71,9 +96,15 @@ function calculateSpamTime() {
 	const minutes = Math.floor(spamCount / 20 - hours * 60);
 	const seconds = Math.floor(spamCount * 3 - minutes * 60 - hours * 3600);
 
-	if (hours != 0) { time += hours.toString() + " hours, "; }
-	if (minutes != 0) { time += minutes.toString() + " minutes, "; }
-	if (seconds != 0) { time += seconds.toString() + " seconds "; }
+	if (hours != 0) {
+		time += hours.toString() + " hours, ";
+	}
+	if (minutes != 0) {
+		time += minutes.toString() + " minutes, ";
+	}
+	if (seconds != 0) {
+		time += seconds.toString() + " seconds ";
+	}
 
 	return time;
 }

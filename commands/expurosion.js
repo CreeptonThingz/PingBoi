@@ -10,7 +10,7 @@ async function execute(interaction) {
 	if (bot.isDisabled) {
 		interaction.reply(
 			"https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/b8/b806e5833e5aba0969ea9ea24c8515fd7cbceb93_full.jpg" +
-            "\nYamete Kudasai",
+				"\nYamete Kudasai"
 		);
 	} else if (interaction.user.id === bot.ownerID) {
 		bot.isDisabled = true;

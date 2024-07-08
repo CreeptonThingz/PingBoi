@@ -3,10 +3,12 @@ const { SlashCommandBuilder, MessageEmbed } = require("discord.js");
 const data = new SlashCommandBuilder()
 	.setName("rngball")
 	.setDescription("8Ball but better")
-	.addStringOption(option => option
-		.setName("input")
-		.setDescription("Ask a question")
-		.setRequired(true));
+	.addStringOption((option) =>
+		option
+			.setName("input")
+			.setDescription("Ask a question")
+			.setRequired(true)
+	);
 
 async function execute(interaction) {
 	const bot = require("./../bot.js");
@@ -14,7 +16,7 @@ async function execute(interaction) {
 	const phrases = [
 		// Yes statements
 		"Yes",
-		"The answer is the same to this: \"Is anime good?\"",
+		'The answer is the same to this: "Is anime good?"',
 		"*Nods head*",
 		"As sure as telling you Aidan won't come back",
 		"I guess",
@@ -56,12 +58,27 @@ async function execute(interaction) {
 
 	const reply = new MessageEmbed()
 		.setColor("#" + bot.randomColor())
-		.setAuthor({ name: interaction.member.nickname + " asks, \"" + interaction.options.getString("input") + "\"", iconURL: interaction.member.displayAvatarURL() })
+		.setAuthor({
+			name:
+				interaction.member.nickname +
+				' asks, "' +
+				interaction.options.getString("input") +
+				'"',
+			iconURL: interaction.member.displayAvatarURL(),
+		})
 		.setTitle("RNGBall says...")
 		.setDescription(phrases[bot.getRandomInt(phrases.length)]);
 
-	if (interaction.options.getString("input").toLowerCase().includes("is anime good")) {
-		reply.setAuthor({ name: interaction.member.nickname + " asks, \"Am I stupid?\"", iconURL: interaction.member.displayAvatarURL() });
+	if (
+		interaction.options
+			.getString("input")
+			.toLowerCase()
+			.includes("is anime good")
+	) {
+		reply.setAuthor({
+			name: interaction.member.nickname + ' asks, "Am I stupid?"',
+			iconURL: interaction.member.displayAvatarURL(),
+		});
 		reply.setDescription("Yes");
 	}
 
