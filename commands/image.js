@@ -3,15 +3,19 @@ const { SlashCommandBuilder } = require("discord.js");
 const data = new SlashCommandBuilder()
 	.setName("image")
 	.setDescription("Search for image")
-	.addStringOption(option => option
-		.setName("query")
-		.setDescription("Input Search Query")
-		.setRequired(true));
+	.addStringOption((option) =>
+		option
+			.setName("query")
+			.setDescription("Input Search Query")
+			.setRequired(true)
+	);
 
 async function execute(interaction) {
 	const bot = require("./../bot.js");
 	const SerpApi = require("google-search-results-nodejs");
-	const search = new SerpApi.GoogleSearch("44a20c71539654ff8e754c35d6326bf23fe34652c5f9468d9a8d752ec7609112");
+	const search = new SerpApi.GoogleSearch(
+		"44a20c71539654ff8e754c35d6326bf23fe34652c5f9468d9a8d752ec7609112"
+	);
 
 	const params = {
 		engine: "google",
@@ -24,11 +28,19 @@ async function execute(interaction) {
 
 	await interaction.deferReply();
 	await search.json(params, (resultsData) =>
-		interaction.editReply(resultsData["images_results"][bot.getRandomInt(data["images_results"].length)]["original"])
-			.catch(err => {
+		interaction
+			.editReply(
+				resultsData["images_results"][
+					bot.getRandomInt(data["images_results"].length)
+				]["original"]
+			)
+			.catch((err) => {
 				console.error(err);
-				interaction.reply({ content: "Uh oh something broke", ephemeral: true });
-			}),
+				interaction.reply({
+					content: "Uh oh something broke",
+					ephemeral: true,
+				});
+			})
 	);
 }
 

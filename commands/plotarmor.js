@@ -11,10 +11,12 @@ async function execute(interaction) {
 		interaction.reply("HUH?! Did you __***SAY***__ something?!");
 	} else if (interaction.user.id === bot.ownerID) {
 		bot.isDisabled = false;
-		/* eslint-disable-next-line */
-		interaction.reply("\*Summons inpenetrable shield\*");
+
+		interaction.reply("*Summons inpenetrable shield*");
 	} else if (interaction.user.id !== bot.ownerID) {
-		interaction.reply("ERROR: User is too inexperienced to use this command.");
+		interaction.reply(
+			"ERROR: User is too inexperienced to use this command."
+		);
 	}
 }
 

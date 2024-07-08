@@ -12,7 +12,9 @@ async function execute(interaction) {
 
 	// Check if command exists
 	if (!command) {
-		console.error(`No command matching ${interaction.commandName} was found.`);
+		console.error(
+			`No command matching ${interaction.commandName} was found.`
+		);
 		return;
 	}
 
@@ -26,15 +28,20 @@ async function execute(interaction) {
 	const now = Date.now();
 	const timestamps = cooldowns.get(command.data.name);
 	const defaultCooldownDuration = 3;
-	const cooldownAmount = (command.cooldown ?? defaultCooldownDuration) * 1_000;
+	const cooldownAmount =
+		(command.cooldown ?? defaultCooldownDuration) * 1_000;
 
 	// Don't run command if user is still in cooldown
 	if (timestamps.has(interaction.user.id)) {
-		const expirationTime = timestamps.get(interaction.user.id) + cooldownAmount;
+		const expirationTime =
+			timestamps.get(interaction.user.id) + cooldownAmount;
 
 		if (now < expirationTime) {
 			const expiredTimestamp = Math.round(expirationTime / 1_000);
-			return interaction.reply({ content: `Chill out bro. You can't use \`${command.data.name}\` for another <t:${expiredTimestamp}:R>.`, ephemeral: true });
+			return interaction.reply({
+				content: `Chill out bro. You can't use \`${command.data.name}\` for another <t:${expiredTimestamp}:R>.`,
+				ephemeral: true,
+			});
 		}
 	}
 
@@ -48,9 +55,15 @@ async function execute(interaction) {
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {
-			await interaction.followUp({ content: "There was an error while executing this command!", ephemeral: true });
+			await interaction.followUp({
+				content: "There was an error while executing this command!",
+				ephemeral: true,
+			});
 		} else {
-			await interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
+			await interaction.reply({
+				content: "There was an error while executing this command!",
+				ephemeral: true,
+			});
 		}
 	}
 }
