@@ -1,8 +1,9 @@
 // Require necessary classes and variables
 const { REST, Routes } = require("discord.js");
-const { CLIENT_ID, GUILD_ID, TOKEN } = require("./config.json");
-const fs = require("node:fs");
-const path = require("node:path");
+require("dotenv").config();
+const { CLIENT_ID, GUILD_ID, TOKEN } = process.env;
+const fs = require("fs");
+const path = require("path");
 
 // Grab all command files from the commands directory
 const commands = [];
