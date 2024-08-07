@@ -1,6 +1,6 @@
 // Require necessary command handling modules
-const fs = require("node:fs");
-const path = require("node:path");
+const fs = require("fs");
+const path = require("path");
 
 // Require necessary discord.js classes
 const { Client, Collection, GatewayIntentBits } = require("discord.js");
